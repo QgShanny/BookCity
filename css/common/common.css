@@ -1,0 +1,36 @@
+* {
+  text-decoration: none;
+  list-style: none;
+}
+body {
+  background: #eff3f5;
+  overflow-x: hidden;
+}
+a:hover {
+  text-decoration: none;
+}
+li {
+  display: inline-block;
+  float: left;
+}
+ul {
+  padding-left: 0;
+}
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table;
+}
+.clearfix:after {
+  clear: both;
+}
+/* for ie 6/7 */
+.clearfix {
+  zoom: 1;
+}
+.mui-icon {
+  color: #23a3d5 !important;
+}
+.mui-scroll {
+  min-height: 100%;
+}

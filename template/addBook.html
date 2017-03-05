@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>添加书籍</title>
+		<link rel="stylesheet" type="text/css" href="../css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="../css/common/common.css" />
+		<link rel="stylesheet" type="text/css" href="../css/main.css" />
+		<script src="../js/lib/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/lib/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">添加书籍</h1>
+		</header>
+		<form class="mui-input-group headerafter">
+			<div class="mui-input-row">
+				<label for="bookID">ID</label>
+				<input type="text" name="bookID" id="bookID" class="mui-input-clear" value="100" />
+			</div>
+
+			<div class="mui-input-row">
+				<label for="bookName">书名</label>
+				<input type="text" name="bookName" id="bookName" class="mui-input-clear" value="" />
+			</div>
+
+			<div class="mui-input-row">
+				<label for="author">作者</label>
+				<input type="text" name="author" id="author" class="mui-input-clear" value="" />
+			</div>
+
+			<div class="mui-input-row">
+				<label for="from">出处</label>
+				<input type="text" name="from" id="from" class="mui-input-clear" value="网络连载" />
+			</div>
+
+			<div class="mui-input-row">
+				<label for="classIs">类别</label>
+				<input type="text" name="classIs" id="classIs" class="mui-input-clear" value="女生" />
+			</div>
+
+			<div class="mui-input-row">
+				<label for="Msg">信息</label>
+				<input type="text" name="Msg" id="Msg" class="mui-input-clear" value="" />
+			</div>
+
+			<div class="mui-input-row">
+				<label for="imgUrl">封面地址</label>
+				<input type="text" name="imgUrl" id="imgUrl" class="mui-input-clear" value="" />
+			</div>
+		</form>
+		<div class="buttonWrap">
+			<button type="button" class="mui-btn mui-btn-primary" id="reset">重置</button>
+			<button type="button" class="mui-btn mui-btn-primary" id="gitMsg" onclick="gitBookMsg();">提交</button>
+		</div>
+		
+		<script src="https://cdn.wilddog.com/js/client/current/wilddog.js"></script>
+		<script src="../js/data.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var ref = new Wilddog("https://bookcity2017.wilddogio.com");
+			function gitBookMsg(){
+				var bookid = $("#bookID").val();
+				var bookname = $("#bookName").val();
+				var author = $("#author").val();
+				var from = $("#from").val();
+				var classIs = $("#classIs").val();
+				var msg = $("#Msg").val();
+				var imgUrl = $("#imgUrl").val();
+				
+				if($.trim(bookid).length == 0 || 
+				   $.trim(bookname).length == 0 || 
+				   $.trim(author).length == 0 || 
+				   $.trim(from).length == 0 || 
+				   $.trim(classIs).length == 0 || 
+				   $.trim(msg).length == 0 ||
+				   $.trim(imgUrl).length == 0){
+					alert("您还有未输入的信息");
+					return;
+				}
+				
+				var postsRef = ref.child("Books");
+				
+				postsRef.push({
+					"BookId": bookid,
+					"BookName": bookname,
+					"Author": author,
+					"from": from,
+					"Class": classIs,
+					"Msg": msg,
+					"imgUrl": imgUrl
+				});		
+				
+				alert("数据插入成功");
+			}
+		</script>
+	</body>
+
+</html>

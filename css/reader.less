@@ -1,0 +1,144 @@
+//主题颜色
+@backColor: #eff3f5;
+@Color: #23a3d5;
+@blackColor: rgba(0, 0, 0, 0.64);
+@display: inline-block;
+body#readerBody {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    #bookcontainer {
+        width: 100%;
+        height: 100%;
+        background: lightgoldenrodyellow;
+    }
+    #readerHead {
+        position: fixed;
+        top: -44px;
+        width: 100%;
+        background: @blackColor;
+        a {
+            color: white !important;
+        }
+    }
+    #readerSet {
+        position: fixed;
+        bottom: -80px;
+        width: 100%;
+        height: 80px;
+        padding-top: 10px;
+        background: @blackColor;
+        >ul {
+            width: 100%;
+            li {
+                width: 25%;
+                text-align: center;
+                a {
+                    color: white;
+                    i {
+                        color: white !important;
+                        display: block;
+                        margin-bottom: 8px;
+                    }
+                }
+            }
+        }
+    }
+    div#detailSet {
+        width: 100%;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        text-align: center;
+        position: fixed;
+        bottom: 0;
+        background: @blackColor;
+        bottom: -172px;
+        hr {
+            border: none;
+            border-top: solid 1px gray;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+        div#fontSize {
+            button,
+            p {
+                display: inline-block;
+                color: white;
+            }
+            button {
+                height: 25px;
+                width: 25px;
+                padding: 0;
+                background: #1c2d36;
+                border: none;
+            }
+            button:first-of-type {
+                margin-right: 10px;
+            }
+            button:last-of-type {
+                margin-left: 10px;
+            }
+            p:nth-of-type(2) {
+                float: right;
+                margin-right: 10px;
+            }
+        }
+        div#fontSpace,
+        div#fontColor {
+            div.col-xs-3 {
+                padding-top: 5px;
+            }
+            div {
+                display: inline-block;
+            }
+            span {
+                display: inline-block;
+            }
+            p {
+                float: right;
+                color: white;
+            }
+        }
+        div#fontColor {
+            div {
+                span {
+                    i {
+                        display: inline-block;
+                        height: 30px;
+                        width: 30px;
+                        background: rgba(255, 88, 0, 0.98);
+                        border-radius: 50%;
+                    }
+                }
+                span:nth-of-type(2) {
+                    i {
+                        background: rgba(0, 206, 255, 0.28);
+                    }
+                }
+                span:nth-of-type(3) {
+                    i {
+                        background: #eec8f3;
+                    }
+                }
+                    span:nth-of-type(4) {
+                        i {
+                            background: rgba(0, 128, 0, 0.28);
+                        }
+                    }
+                    span:nth-of-type(5) {
+                        i {
+                            background: rgba(239, 166, 32, 0.38);
+                        }
+                    }
+                    span:nth-of-type(6) {
+                        i {
+                            background: rgba(0, 206, 255, 0.28);
+                        }
+                    }
+                }
+            }
+        }
+    }

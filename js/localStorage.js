@@ -5,18 +5,24 @@ function setStorage(key, value) {
 		time: setTime
 	}));
 	console.log(localStorage.getItem(key));
-	setTimeout(function() {
-		localStorage.removeItem(key);
-	}, 1000 * 60 * 60 *2);	//两个小时后自动清除缓存
+	//	setTimeout(function() {
+	//		localStorage.removeItem(key);
+	//		console.log("退出");
+	//	}, 1000 * 60 * 60 * 2);	//两个小时后自动清除缓存
 }
 
-function getStorage(key) {
+function getStorage(key, exp) {
 	var data = localStorage.getItem(key);
-	if(data == null) {
+	data = JSON.parse(data);
+	var msg = "";
+
+	if(new Date().getTime() - data.time > exp) {
 		console.log("out");
+		msg = "0";
 	} else {
-		var obj = JSON.parse(data);
+		msg = "1";
 		console.log("in");
-		console.log(obj.data);
 	}
+
+	return msg;
 }

@@ -59,31 +59,14 @@ ref.on("value", function(snapshot) {
 });
 
 //判断用户是否登录
-var userObj = localStorage.getItem("userId");
-if(userObj != null) {
-	var username = localStorage.getItem("userName");
-	username = JSON.parse(username);
-	console.log(username.data);
-	username = username.data; //将用户名转为字符串类型
-	console.log(typeof username);
-	$("#username").text(username);
-} else {
+var msg  = getStorage("userId",1000 * 60 * 60 * 2); //两个小时后自动清除缓存
+if(msg == "0"){
 	$("#username").text("点击登录");
 }
+else{
+	var username = localStorage.getItem("userName");
+	username = JSON.parse(username);
+	username = username.data; //将用户名转为字符串类型
+	$("#username").text(username);
+}
 
-$("#logout").on('tap', function() {
-	localStorage.removeItem("userId");
-	localStorage.removeItem("userName");
-	window.location.href = "index.html";
-});
-$("#username").on('tap', function() {
-	window.location.href = "login.html";
-});
-$("#manage").on('tap',function(){
-	if(userObj == null){
-		alert("您未登录");
-		window.location.href = "login.html";
-		return;
-	}
-	window.location.href = "addBook.html";
-})

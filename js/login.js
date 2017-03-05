@@ -13,7 +13,6 @@ ref.on("value", function(snapshot) {
 //	console.log(usersArr);
 
 });
-
 $("#login").click(function(){
 	var phone = $.trim($("#phone").val());
 	var password = $.trim($("#password").val());

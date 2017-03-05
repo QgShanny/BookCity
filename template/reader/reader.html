@@ -8,9 +8,14 @@
 		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/common/common.css" />
 		<link rel="stylesheet" type="text/css" href="../../css/main.css" />
-		<link rel="stylesheet" type="text/css" href="../../css/common/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/common/bootstrap.min.css" />
 		<script src="../../js/lib/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
 		<script src="../../js/lib/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			#Jcolor{
+				position: fixed !important;
+			}
+		</style>
 	</head>
 
 	<body id="readerBody">
@@ -45,7 +50,6 @@
 				</li>
 			</ul>
 		</div>
-
 		<div id="detailSet">
 			<div id="fontSize">
 				<button id="jianFontSize">-</button>
@@ -103,12 +107,17 @@
 					</span>
 				</div>
 				<div class="col-xs-3">
-					<p>更多</p>
+					<p id="moreColor">更多</p>
 				</div>
 			</div>
 
 		</div>
+		<!--<div id="moreColorPang" style="position: fixed;left: 0;bottom: 264px;" onclick="changeColor();">
+
+		</div>-->
 		<script src="../../js/reader.js" type="text/javascript" charset="utf-8"></script>
+		<script src="jquery1.3.2.js"></script>
+		<script src="color.js"></script>
 	</body>
 
 </html>

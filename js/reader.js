@@ -40,27 +40,27 @@ $("#readerSet ul li:nth-of-type(3)").on('tap', function() {
 	flagBar = 0;
 });
 
-$("#jianFontSize").on('tap',function(){
+$("#jianFontSize").on('tap', function() {
 	var temp = $("#fontSizeSpan").text();
 	temp = parseInt(temp);
-	if(temp == 10){
+	if(temp == 10) {
 		return;
 	}
 	temp -= 1;
 	$("#fontSizeSpan").text(temp);
-	$("#bookcontainer h4").css("font-size",temp+2+"px");
-	$("#bookcontainer p").css("font-size",temp+"px");
+	$("#bookcontainer h4").css("font-size", temp + 2 + "px");
+	$("#bookcontainer p").css("font-size", temp + "px");
 })
-$("#addFontSize").on('tap',function(){
+$("#addFontSize").on('tap', function() {
 	var temp = $("#fontSizeSpan").text();
 	temp = parseInt(temp);
-	if(temp == 30){
+	if(temp == 10) {
 		return;
 	}
 	temp += 1;
 	$("#fontSizeSpan").text(temp);
-	$("#bookcontainer h4").css("font-size",temp+2+"px");
-	$("#bookcontainer p").css("font-size",temp+"px");
+	$("#bookcontainer h4").css("font-size", temp + 2 + "px");
+	$("#bookcontainer p").css("font-size", temp + "px");
 })
 
 window.onload = function() {
@@ -68,9 +68,20 @@ window.onload = function() {
 	for(var i = 0; i < spanLen.length; i++) {
 		(function() {
 			var p = i + 1;
-			$("#fontColorDiv span:nth-of-type(" + (i + 1) + ")").on('tap', function() {
+			$("#fontColorDiv span:nth-of-type(" + p + ")").click(function(){
 				$("#bookcontainer").css("background", $("#fontColorDiv span:nth-of-type(" + p + ")>i").css("background"));
 			});
 		})();
 	}
 }
+
+
+$("#moreColor").on('tap', function() {
+	Jcolor(this).color();
+});
+
+//标签内容一改变，触发的函数
+$("#moreColor").bind('DOMNodeInserted', function(e) {
+	alert('element now contains: ' + $(e.target).html());
+});
+

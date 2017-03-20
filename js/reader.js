@@ -1,3 +1,5 @@
+define(['jquery'],function(){
+	
 var flagBar = 0;
 var flagFont = 0; //字体背景的设置标识
 $("#bookcontainer").on("tap", function() {
@@ -85,3 +87,4 @@ $("#moreColor").bind('DOMNodeInserted', function(e) {
 	alert('element now contains: ' + $(e.target).html());
 });
 
+})

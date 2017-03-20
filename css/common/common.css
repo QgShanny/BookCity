@@ -1,6 +1,7 @@
 * {
   text-decoration: none;
   list-style: none;
+  touch-action: none;  /*任何触摸事件都不会产生默认行为，但是 touch 事件照样触发。*/
 }
 body {
   background: #eff3f5;
@@ -33,4 +34,8 @@ ul {
 }
 .mui-scroll {
   min-height: 100%;
+}
+.mui-popup-button.mui-popup-button-bold,.mui-popup-button{
+	color: #23a3d5;
+	font-weight: 500;
 }

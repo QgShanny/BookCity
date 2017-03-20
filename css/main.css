@@ -932,3 +932,15 @@ body#readerBody div#detailSet div#fontColor div span:nth-of-type(5) i {
 body#readerBody div#detailSet div#fontColor div span:nth-of-type(6) i {
   background: lightgoldenrodyellow;
 }
+.backManager {
+  margin-top: 50px;
+  width: 100%;
+}
+.backManager li.mui-table-view-cell {
+  display: block;
+  float: none;
+}
+table tr,
+table td {
+  border: solid #23a3d5 1px;
+}

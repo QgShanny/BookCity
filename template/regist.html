@@ -8,13 +8,9 @@
 		<link href="../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../css/common/common.css"/>
 		<link rel="stylesheet" type="text/css" href="../css/main.css" />
-		<script src="../js/lib/mui.min.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 
 	<body>
-		<script type="text/javascript">
-			mui.init()
-		</script>
 		<header class="mui-bar mui-bar-nav" class="headerafter">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">注册</h1>
@@ -53,72 +49,8 @@
 			<button type="button" class="mui-btn mui-btn-primary" id="reset">重置</button>
 			<button type="button" class="mui-btn mui-btn-primary" id="gitMsg" onclick="gitUserMsg();">提交</button>
 		</div>
-		<script src="../js/lib/jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
 		<script src="https://cdn.wilddog.com/js/client/current/wilddog.js"></script>
-		<script src="../js/data.js" type="text/javascript" charset="utf-8"></script>
-		<script type="text/javascript">
-			var ref = new Wilddog("https://bookcity2017.wilddogio.com");
-
-			function gitUserMsg() {
-				var username = $("#username").val();
-				var phone = $("#phone").val();
-				var email = $("#email").val();
-				var password = $("#password").val();
-				var surePassword = $("#surePassword").val();
-				if($("#sex li:first-of-type").hasClass("mui-selected")){
-					var sex = "男";
-				}
-				else{
-					sex = "女";
-				}
-				
-				if($.trim(username).length == 0 ||
-					$.trim(phone).length == 0 ||
-					$.trim(email).length == 0 ||
-					$.trim(password).length == 0) {
-					alert("您还有未输入的信息");
-					return;
-				}
-				
-				var isSign = 0;
-				for(i in usersArr){
-					if(username == usersArr[i].UserName){
-						alert("该用户名已经有人使用！");
-						isSign = 1;
-						break;
-					}
-					if(phone == usersArr[i].Phone){
-						alert("该手机已经注册过！");
-						isSign = 1;
-						break;
-					}
-					
-					if(email == usersArr[i].Email){
-						alert("该邮箱已经注册过！");
-						isSign = 1;
-						break;
-					}
-				}
-				
-				if(isSign == 1){
-					return;
-				}
-				
-				var postsRef = ref.child("Users");
-
-				postsRef.push({
-					"UserName": username,
-					"Phone": phone,
-					"Email": email,
-					"Password": password,
-					"Sex": sex,
-					"Score":0,
-					"Manager": 0
-				});
-
-				alert("数据插入成功");
-			}
-		</script>
+		<script data-main = "../js/login" src="../js/lib/require.js" type="text/javascript" charset="utf-8"></script>
 	</body>
 
 </html>

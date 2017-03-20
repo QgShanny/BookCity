@@ -1,0 +1,12 @@
+.backManager {
+  margin-top: 50px;
+  width: 100%;
+}
+.backManager li.mui-table-view-cell {
+  display: block;
+  float: none;
+}
+table tr,
+table td {
+  border: solid #23a3d5 1px;
+}

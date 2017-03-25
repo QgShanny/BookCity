@@ -36,19 +36,30 @@
 				<label>确认密码：</label>
 				<input id="surePassword" type="password" class="mui-input-clear mui-input-password" placeholder="请输入确认密码" value="123456">
 			</div>
-			<ul class="mui-table-view mui-table-view-radio" id="sex">
-				<li class="mui-table-view-cell mui-selected">
-					<a class="mui-navigate-right">男</a>
-				</li>
-				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right">女</a>
-				</li>
-			</ul>
+			<div class="mui-input-row">
+				<label>性别：</label>
+				<ul class="mui-table-view mui-table-view-radio" id="sex">
+					<li class="mui-table-view-cell mui-selected">
+						<a class="mui-navigate-right">男</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right">女</a>
+					</li>
+				</ul>
+			</div>
+			<div class="mui-input-row">
+				<label>商家：</label>
+				<div class="mui-switch mui-switch-mini seller">
+				  <div class="mui-switch-handle"></div>
+				</div>	
+			</div>
+			
 		</div>
-				<div class="buttonWrap">
+		<div class="buttonWrap">
 			<button type="button" class="mui-btn mui-btn-primary" id="reset">重置</button>
 			<button type="button" class="mui-btn mui-btn-primary" id="gitMsg" onclick="gitUserMsg();">提交</button>
 		</div>
+		<p align="center">提示：商家选项意思为是否注册为商家，可上传书籍，卖书</p>
 		<script src="https://cdn.wilddog.com/js/client/current/wilddog.js"></script>
 		<script data-main = "../js/login" src="../js/lib/require.js" type="text/javascript" charset="utf-8"></script>
 	</body>

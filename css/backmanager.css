@@ -9,4 +9,15 @@
 table tr,
 table td {
   border: solid #23a3d5 1px;
+  line-height: 25px;
+  font-size: 14px;
+  text-align: center;
+}
+#addBook,
+#addUser {
+  float: right;
+  color: #23a3d5;
+  border: #23a3d5 solid 1px;
+  margin-right: 10px;
+  margin-top: 10px;
 }

@@ -1,6 +1,6 @@
 define(['jquery', 'localStorage'], function() {
 
-	var jsonStr, boyJson; //书籍的json数据
+	var jsonStr, boyJson, bookList; //书籍的json数据
 	var booksArr = [];
 
 	//书籍分类，男生，女生，科技。。。
@@ -11,21 +11,17 @@ define(['jquery', 'localStorage'], function() {
 
 	//once 只读取一次
 	ref.once("value", function(snapshot) {
-		var jsonStr = snapshot.val();
+		jsonStr = snapshot.val();
 		for(i in jsonStr) {
 			booksArr.push(jsonStr[i]);
 		}
-
-//		for(var i = 0; i = booksArr.length; i++) {
-//			var bookList = "<tr>1<td></td<td></td><td></td><td></td></tr>";
-//			$(bookList).appendTo($(".backManager"));
-//		}
 		
 		for(i in booksArr) {
 			//男频推荐内容类别
 			if(booksArr[i].Class == "男生") {
 				boyArr.push(booksArr[i]);
 			}
+			
 			if(booksArr[i].Class == "女生") {
 				girlArr.push(booksArr[i]);
 			}
@@ -53,14 +49,13 @@ define(['jquery', 'localStorage'], function() {
 		//			boyJson = "[" + boyJson + "]";
 		//			console.log(boyJson);
 		//			boyJson = JSON.parse(boyJson);
-
 	});
 
 	var jsonUserStr; //之后要优化
 	var usersArr = [];
-	var ref = new Wilddog("https://bookcity2017.wilddogio.com/Users");
+	var refUser = new Wilddog("https://bookcity2017.wilddogio.com/Users");
 	//on 有变化就读取
-	ref.on("value", function(snapshot) {
+	refUser.on("value", function(snapshot) {
 		var jsonUserStr = snapshot.val();
 		for(i in jsonUserStr) {
 			usersArr.push(jsonUserStr[i]);
@@ -72,7 +67,7 @@ define(['jquery', 'localStorage'], function() {
 	if(obj == null) {
 		$("#username").text("点击登录");
 	} else {
-		var msg = getStorage("userId", 1000 * 6);
+		var msg = getStorage("userId", 1000 * 60 * 60 * 2);
 		if(msg == 0) {
 			$("#username").text("点击登录");
 			return;
@@ -86,28 +81,49 @@ define(['jquery', 'localStorage'], function() {
 
 	//签到
 	$("#sign").on('tap', function() {
-		var userObj = getStorageNow("userId");
-		if(userObj == null) {
+		var signFlag = sign("userId");
+			if(signFlag == 1){
+				mui.alert("签到成功", function() {
+					//更新积分
+					var ref = new Wilddog("https://bookcity2017.wilddogio.com/Users"); //找到对应的用户
+					var newRef = ref.child("-Ke9Vh_OrBIKqbBQt2qg");
+					scoreObj = parseInt(scoreObj) + 10;
+					newRef.update({
+						"Score": scoreObj
+					});
+					$("#score").text(scoreObj);
+					setStorage("score", scoreObj);
+				});
+			}
+	});
+
+		var loginFun = function(){
 			var btnArray = ['取消', '确认'];
 			mui.confirm("您未登录,是否登录？", "", btnArray, function(e) {
 				//回调方法内容
 				if(e.index == 1) {
 					window.location.href = "login.html";
 				}
-			});
-		} else {
-			mui.alert("签到成功", function() {
-				//更新积分
-				var ref = new Wilddog("https://bookcity2017.wilddogio.com/Users"); //找到对应的用户
-				var newRef = ref.child("-Ke9Vh_OrBIKqbBQt2qg");
-				scoreObj = parseInt(scoreObj) + 10;
-				newRef.update({
-					"Score": scoreObj
-				});
-				$("#score").text(scoreObj);
-				setStorage("score", scoreObj);
-			});
+			});		
+	}
+	var sign = function(key) {
+		var signFlag = 0;
+		var data = getStorageNow(key);
+		if(data == null){
+			loginFun();
+			return;
 		}
-	});
-
+		else{
+			var msg = getStorage(key,1000 * 60 * 60 * 2);
+			if(msg == 0){
+				loginFun();
+				return;
+			}
+		}
+		signFlag = 1;
+		return signFlag;
+	}
+	
+	window.loginFun = loginFun;
+	window.sign = sign;
 })

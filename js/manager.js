@@ -47,24 +47,52 @@ define(['jquery', 'mui', 'data'], function() {
 		mui.alert("书籍插入成功");
 	}
 	
+//	之前优化,公用数据
+	var ref = new Wilddog("https://bookcity2017.wilddogio.com/Books");
+	//once 只读取一次
+	ref.once("value", function(snapshot) {
+		var jsonStr = snapshot.val();
+		var booksArr = [];
+		var bookList = "";
+		for(i in jsonStr) {
+			booksArr.push(jsonStr[i]);
+		}
+     
+		for(i in booksArr) {
+			bookList += "<tr><td>" + booksArr[i].BookId + "</td><td>" + booksArr[i].BookName + "</td><td>" + booksArr[i].Author + "</td><td><i class='mui-icon mui-icon-trash'></i><i class='mui-icon mui-icon-compose'></i></td></tr>";
+		}
+		$(bookList).appendTo($("#allBookList"));
+	});
 	
+	var ref = new Wilddog("https://bookcity2017.wilddogio.com/Users");
+	//once 只读取一次
+	ref.once("value", function(snapshot) {
+		var jsonStr = snapshot.val();
+		var usersArr = [];
+		var userList = "";
+		for(i in jsonStr) {
+			usersArr.push(jsonStr[i]);
+		}
+     
+		for(i in usersArr) {
+			userList += "<tr><td>" + usersArr[i].UserName + "</td><td>" + usersArr[i].Sex + "</td><td>" + usersArr[i].Phone + "</td><td><i class='mui-icon mui-icon-trash'></i><i class='mui-icon mui-icon-compose'></i></td></tr>";
+		}
+		$(userList).appendTo($("#allUserList"));
+	});
 	
-//	var ref = new Wilddog("https://bookcity2017.wilddogio.com/Books");
-//	ref.once("value", function(snapshot) {
-//		var bookJson = snapshot.val();
-//		var book = [];
-//		for(i in bookJson) {
-//			book.push(bookJson[i]);
-//		}
-//		console.log(book);
-//	});
-//	
-//	var books = function($scope,book){
-//		$scope.book = book;
-//	}	
-//	var bookList = "<tr ng-repeat='"+ item in book+ "'><td>"+book.BookId+"</td><td>"+book.BookName+"</td><td>"+book.Author+"</td><td>删除</td></tr>";
+	$("#addBook").on('tap',function(){
+		 var signFlag = sign('userId');
+		 if(signFlag == 1){
+		 	window.location.href = "addBook.html";
+		 }
+	});
 	
-
+	$("#addUser").on('tap',function(){
+		 var signFlag = sign('userId');
+		 if(signFlag == 1){
+		 	window.location.href = "../regist.html";
+		 }
+	});
 	
 	window.gitBookMsg = gitBookMsg;
 })

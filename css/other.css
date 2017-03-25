@@ -5,6 +5,7 @@
 .buttonWrap {
   width: 100%;
   text-align: center;
+  margin-bottom: 30px;
 }
 .buttonWrap #reset,
 .buttonWrap #cancle {
@@ -16,4 +17,14 @@
 .buttonWrap #login {
   background-color: #23a3d5;
   border: #23a3d5;
+}
+.seller {
+  float: left !important;
+}
+.mui-switch.mui-switch-mini.seller.mui-active {
+  border-color: #23a3d5;
+  background-color: #23a3d5;
+}
+.mui-table-view.mui-table-view-radio a:after {
+  color: #23a3d5 !important;
 }

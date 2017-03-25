@@ -68,6 +68,7 @@ define(['jquery', 'mui', 'localStorage', 'login'], function() {
 		var email = $("#email").val();
 		var password = $("#password").val();
 		var surePassword = $("#surePassword").val();
+		var seller = 0;
 		if($("#sex li:first-of-type").hasClass("mui-selected")) {
 			var sex = "男";
 		} else {
@@ -115,10 +116,11 @@ define(['jquery', 'mui', 'localStorage', 'login'], function() {
 			"Password": password,
 			"Sex": sex,
 			"Score": 10,
-			"Manager": 0
+			"Manager": 0,
+			"Seller" : seller
 		});
 
-		mui.alert("数据插入成功");
+		mui.alert("注册成功");
 	}
 
 	window.gitUserMsg = gitUserMsg;

@@ -1,4 +1,4 @@
-define(['jquery','localStorage'],function(){
+define(['jquery', 'localStorage'], function() {
 
 	var offset1 = $("#bookCase").offset().left;
 	$("#theme").css("left", offset1);
@@ -54,19 +54,19 @@ define(['jquery','localStorage'],function(){
 		A.push("score");
 		A.push("manager");
 		removeItems(A);
-		mui.alert("退出成功！",function(){
-			window.location.href = "index.html";	
+		mui.alert("退出成功！", function() {
+			window.location.href = "index.html";
 		});
 	});
 	$("#username").on('tap', function() {
 		window.location.href = "login.html";
 	});
-	
+
 	$("#manage").on('tap', function() {
 		var userObj = localStorage.getItem("userId");
 		if(userObj == null) {
 			var btnArray = ['取消', '确认'];
-			mui.confirm("您未登录,是否登录？","", btnArray, function(e) {
+			mui.confirm("您未登录,是否登录？", "", btnArray, function(e) {
 				//回调方法内容
 				if(e.index == 1) {
 					window.location.href = "login.html";
@@ -75,12 +75,15 @@ define(['jquery','localStorage'],function(){
 			return;
 		}
 		var isManger = getStorageNow("manager");
-		if(isManger == "0"){
+		if(isManger == "0") {
 			window.location.href = "manager/index.html";
-		}
-		else{
+		} else {
 			mui.alert("对不起，您没有权限进入后台管理！");
 		}
 	});
-	
+	//首页点击阅读
+	$(".read").on('tap', function() {
+		window.location.href = 'reader/reader.html';
+	});
+
 })

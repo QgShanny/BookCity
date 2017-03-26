@@ -3,6 +3,9 @@
   list-style: none;
   touch-action: none;  /*任何触摸事件都不会产生默认行为，但是 touch 事件照样触发。*/
 }
+a:hover,a:link,a:active,a:focus{
+	text-decoration: none;
+}
 body {
   background: #eff3f5;
   overflow-x: hidden;

@@ -14,7 +14,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a href="index.html" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">书籍管理</h1>
+			<h1 class="mui-title">用户管理</h1>
 		</header>
 		
 		<table class="backManager" id="allUserList" border="">
@@ -22,10 +22,59 @@
 				<th>姓名</th>
 				<th>性别</th>
 				<th>号码</th>
+				<th>身份</th>
 				<th>操作</th>
 			</tr>
 		</table>
 		
+		<div id="userUpdate">
+		<div class="mui-input-group headerafter">
+			<div class="mui-input-row">
+				<label>用户名：</label>
+				<input id="username" type="text" class="mui-input-clear" placeholder="请输入用户名" value="">
+			</div>
+			<div class="mui-input-row">
+				<label>号码：</label>
+				<input id="phone" type="text" class="mui-input-clear" placeholder="请输入您的手机号码" value="">
+			</div>
+			<div class="mui-input-row">
+				<label>邮箱：</label>
+				<input id="email" type="text" class="mui-input-clear" placeholder="请输入您的邮箱" value="">
+			</div>
+			<div class="mui-input-row">
+				<label>密码：</label>
+				<input id="password" type="password" class="mui-input-clear mui-input-password" placeholder="请输入密码" value="">
+			</div>
+			<div class="mui-input-row">
+				<label>性别：</label>
+				<ul class="mui-table-view mui-table-view-radio" id="sex">
+					<li class="mui-table-view-cell mui-selected">
+						<a class="mui-navigate-right">男</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right">女</a>
+					</li>
+				</ul>
+			</div>
+			<div class="mui-input-row">
+				<label>商家：</label>
+				<div class="mui-switch mui-switch-mini seller">
+				  <div class="mui-switch-handle"></div>
+				</div>	
+			</div>
+			<div class="mui-input-row">
+				<label>管理员：</label>
+				<div class="mui-switch mui-switch-mini seller">
+				  <div class="mui-switch-handle"></div>
+				</div>	
+			</div>
+			
+		</div>
+		<div class="buttonWrap">
+			<button type="button" class="mui-btn mui-btn-primary" id="reset">重置</button>
+			<button type="button" class="mui-btn mui-btn-primary" id="gitMsg">提交</button>
+		</div>
+		</div>
 		
 		<button type="button" id="addUser" class="mui-btn mui-btn-primary mui-btn-outlined">添加</button>
 

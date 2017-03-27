@@ -75,7 +75,7 @@ define(['jquery', 'localStorage'], function() {
 			return;
 		}
 		var isManger = getStorageNow("manager");
-		if(isManger == "0") {
+		if(isManger == "1") {
 			window.location.href = "manager/index.html";
 		} else {
 			mui.alert("对不起，您没有权限进入后台管理！");
@@ -86,4 +86,7 @@ define(['jquery', 'localStorage'], function() {
 		window.location.href = 'reader/reader.html';
 	});
 
+	var bookDetail = function(bookName,author,from,Class,imgUrl,msg){
+		
+	}
 })

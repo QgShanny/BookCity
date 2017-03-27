@@ -1,37 +1,121 @@
 //主题颜色
-@backColor:#eff3f5;
-@Color:#23a3d5;
-@blackColor:rgba(0, 0, 0, 0.64);
-@display:inline-block;
-
-.headerafter{
+@backColor: #eff3f5;
+@Color: #23a3d5;
+@blackColor: rgba(0, 0, 0, 0.64);
+@display: inline-block;
+.headerafter {
     margin-top: 60px;
     margin-bottom: 20px;
 }
-.buttonWrap{
+.buttonWrap {
     width: 100%;
     text-align: center;
     margin-bottom: 30px;
-    #reset,#cancle{
+    #reset,
+    #cancle {
         background-color: gray;
         border: gray;
         margin-right: 20px;
     }
-    #gitMsg,#login{
+    #gitMsg,
+    #login {
         background-color: @Color;
         border: @Color;
     }
 }
-.seller{
+.seller {
     float: left !important;
 }
-.mui-switch.mui-switch-mini.seller.mui-active{
+.mui-switch.mui-switch-mini.seller.mui-active {
     border-color: @Color;
     background-color: @Color;
 }
-.mui-table-view.mui-table-view-radio{
-    a:after{
+.mui-table-view.mui-table-view-radio {
+    a:after {
         color: @Color !important;
     }
 }
+.bookMsg {
+    position: relative;
+    img {
+        margin-left: 15px;
+        width: 120px;
+    }
+        i {
+            position: absolute;
+            right: 40px;
+            top: 8px;
+        }
+    button{
+            position: absolute;
+    top: 90px;
+    right: 20px;
+    color: @Color !important;
+    border: @Color solid 1px;
+    }
+    div {
+        margin-left: 20px;
+        color: gray;
+        h4 {
+            font-weight: 400;
+            line-height: 30px;
+            color: @blackColor;
+        }
+        span {
+            font-size: 16px;
+            line-height: 25px;
+            color: @Color;
+        }
+        p {
+            line-height: 30px;
+        }
+    }
+}
+#bookClass{
+    width: 90%;
+    margin-left: 5%;
+    border-bottom: solid 1px rgba(35, 163, 213, 0.41);
+    height: 25px;
+    li{
+        width: 50%;
+        text-align: center;
+        height: 25px;
+    }
+    li:first-of-type{
+        border-bottom: solid 2px @Color;
+    }
+}
+.bookIntroduce{
+    width: 90%;
+    margin-left: 5%;
 
+}
+.bookChapter{
+    background-color: @backColor;
+    width: 90%;
+    margin-left: 5%;
+    display: none;
+    li{
+        float: none;
+        display: block;
+    }
+}
+.bookChapter:before{
+    background-color: @backColor;
+}
+
+#userUpdate,#bookUpdate{
+    position: absolute;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: 111;
+    top: 0;
+    min-height: 100%;
+    padding-top: 20%;
+    display: none;
+    .mui-input-group{
+        margin-left: 10px;
+        margin-right: 10px;
+        border-radius: 5px;
+    }
+}

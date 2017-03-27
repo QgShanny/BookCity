@@ -1,14 +1,14 @@
 require.config({
 	paths: {
 		"jquery": "lib/jquery-1.9.1",
-		"mui": "lib/mui.min",
+		"mui": "lib/mui.min"
 	},
 	shim: {
 		//no
 	}
 
 });
-define(['jquery', 'mui'], function() {	
+define(['jquery', 'mui'], function() {
 
 	mui.init()
 	mui.ready(function() {
@@ -18,26 +18,26 @@ define(['jquery', 'mui'], function() {
 	});
 
 	//返回首页
-	$("#backIndex").on('tap',function(){
+	$("#backIndex").on('tap', function() {
 		window.location.href = '../index.html';
 	});
 	var flagBar = 0;
 	var flagFont = 0; //字体背景的设置标识
 	$("#bookcontainer").on("tap", function() {
-		//	$("#bookcontainer").click(function(){
 		if(flagFont == 1) {
-			$("#detailSet").css("bottom", "-172px");
+//			$("#detailSet").css("bottom", "-172px");
+			$("#detailSet").fadeOut('fast');
 			flagFont = 0;
 		} else {
 			if(flagBar == 0) {
-//				$("#readerHead").css("top", "0px");
-//				$("#readerSet").css("bottom", "0px");
+				//				$("#readerHead").css("top", "0px");
+				//				$("#readerSet").css("bottom", "0px");
 				$("#readerHead").fadeIn('fast');
 				$("#readerSet").fadeIn('fast');
 				flagBar = 1;
 			} else {
-//				$("#readerHead").css("top", "-44px");
-//				$("#readerSet").css("bottom", "-80px");
+				//				$("#readerHead").css("top", "-44px");
+				//				$("#readerSet").css("bottom", "-80px");
 				$("#readerHead").fadeOut('fast');
 				$("#readerSet").fadeOut('fast');
 				flagBar = 0;
@@ -52,17 +52,19 @@ define(['jquery', 'mui'], function() {
 		if(flagLight == 0) {
 			$("#bookcontainer").css("background", "black");
 			$("#readerSet li:nth-of-type(2) a span").text("夜间");
+			$(".articleTitle").css("color","#8f8f94");
 			flagLight = 1;
 		} else {
 			$("#bookcontainer").css("background", "lightgoldenrodyellow");
 			$("#readerSet li:nth-of-type(2) a span").text("日间");
+			$(".articleTitle").css("color","black");
 			flagLight = 0;
 		}
 	});
 
 	$("#readerSet ul li:nth-of-type(3)").on('tap', function() {
-		$("#readerHead").css("top", "-44px");
-		$("#readerSet").css("bottom", "-80px")
+		$("#readerHead").fadeOut('fast');
+		$("#readerSet").fadeOut('fast');
 		$("#detailSet").css("bottom", "0");
 		flagFont = 1;
 		flagBar = 0;
@@ -71,10 +73,10 @@ define(['jquery', 'mui'], function() {
 	$("#jianFontSize").on('tap', function() {
 		var temp = $("#fontSizeSpan").text();
 		temp = parseInt(temp);
-		if(temp == 10) {
+		temp -= 1;
+		if(temp == 9) {
 			return;
 		}
-		temp -= 1;
 		$("#fontSizeSpan").text(temp);
 		$("#bookcontainer h4").css("font-size", temp + 2 + "px");
 		$("#bookcontainer p").css("font-size", temp + "px");
@@ -82,28 +84,49 @@ define(['jquery', 'mui'], function() {
 	$("#addFontSize").on('tap', function() {
 		var temp = $("#fontSizeSpan").text();
 		temp = parseInt(temp);
-		if(temp == 10) {
+		temp += 1;
+		if(temp == 31) {
 			return;
 		}
-		temp += 1;
 		$("#fontSizeSpan").text(temp);
 		$("#bookcontainer h4").css("font-size", temp + 2 + "px");
 		$("#bookcontainer p").css("font-size", temp + "px");
 	});
 
+if($("#fontColorDiv").length>0){
 	var spanLen = document.getElementById("fontColorDiv").getElementsByTagName("span");
 	for(var i = 0; i < spanLen.length; i++) {
 		(function() {
 			var p = i + 1;
 			$("#fontColorDiv span:nth-of-type(" + p + ")").on('tap', function() {
 				$("#bookcontainer").css("background", $("#fontColorDiv span:nth-of-type(" + p + ")>i").css("background"));
+				if(p == 1){
+					$("#article>p,.articleTitle").css("color","rgba(255, 255, 255, 0.9)");
+				}
+				else{
+					$("#article>p").css("color","#8f8f94");
+					$(".articleTitle").css("color","black");
+				}
 			});
 		})();
 	}
-
-	$("#moreColor").on('tap', function() {
-		Jcolor(this).color();
-	});
+	
+	var fontSpaceLen = document.getElementById("fontSpace").getElementsByTagName("span");
+	for(var i = 0;i<fontSpaceLen.length;i++){
+		(function(){
+			var p = i + 1;
+			$("#fontSpace span:nth-of-type("+p+")").on("tap",function(){
+				var h = 15 + 5*p;
+				var w = p;
+				$("#article>p").css("line-height",h+"px");
+				$("#article>p").css("letter-spacing",w+"px");
+			});
+		})()
+	}
+}
+	//	$("#moreColor").on('tap', function() {
+	//		Jcolor(this).color();
+	//	});
 
 	//标签内容一改变，触发的函数
 	$("#moreColor").bind('DOMNodeInserted', function(e) {
@@ -123,11 +146,90 @@ define(['jquery', 'mui'], function() {
 		});
 	})
 
+
+	$(function() {
+		$(document).on('tap', '#pre', function() {
+			bookNode--;
+			if(bookNode < 1) {
+				mui.alert("已经是第一章了");
+				return;
+			}
+			getArticle(bookNode);
+			$('html,body').stop().animate({
+				scrollTop: '0px'
+			}, 0)
+		});
+		$(document).on('tap', '#next', function() {
+			bookNode++;
+			if(bookNode > 3) {
+				mui.alert("已经是最后一章了");
+				return;
+			}
+			getArticle(bookNode);
+			$('html,body').stop().animate({
+				scrollTop: '0px'
+			}, 0)
+		});
+	})
+
+	$("#readerSet ul li:first-of-type").on('tap', function() {
+		$("#catalog").css("left", "0");
+		$("#readerHead,#readerSet").fadeOut('fast');
+		$("#catalog").css('transition', '0.5s');
+
+	});
+	$("#back").on('tap', function() {
+		$("#catalog").css('left', '100%');
+		$("#catalog").css('transition', '0.5s');
+		flagBar = 0;
+	});
+
+if($("#fontColorDiv").length>0){
+	var spanLen = document.getElementById("fontColorDiv").getElementsByTagName("span");
+	for(var i = 0; i < spanLen.length; i++) {
+		(function() {
+			var p = i + 1;
+			$("#fontColorDiv span:nth-of-type(" + p + ")").on('tap', function() {
+				$("#bookcontainer").css("background", $("#fontColorDiv span:nth-of-type(" + p + ")>i").css("background"));
+			});
+		})();
+	}
+	//	目录里的目录,书签,笔记
+	for(var i = 0; i < 3; i++) {
+		(function() {
+			var p = i + 1;
+			$("#catalogClass li:nth-of-type(" + p + ")").on('tap', function() {
+				$("#catalogClass li:nth-of-type(" + p + ")").css("border-bottom", "solid #23a3d5 2px");
+				$("#catalogClass li:nth-of-type(" + p + ")").siblings().css("border-bottom", "none");
+				$(".catalogD").css("display", "none");
+				$(".catalogD").eq(p - 1).css("display", "block");
+			});
+		})()
+	}
+	//	目录里的章节
+	var chapterLen = $(".chapter li").length;
+	for(var i = 0; i < chapterLen; i++) {
+		(function() {
+			var p = i + 1;
+			$(".chapter li:nth-of-type(" + p + ") a").on('tap', function() {
+				getArticle(p);
+				$("#catalog").css("left", "100%");
+			});
+		})()
+	}
+}
+if($("#next").length>0){
 	var bookNode = 1;
 	getArticle(bookNode);
-
+}
 	function getArticle(bookNode) {
-		$.getJSON("../../json/test" + bookNode + ".json", function(data) {
+//		if($("#next").length>0){
+//			var route = "../../json/test";
+//		}
+//		else{
+//			var route = "../json/test";			
+//		}
+		$.getJSON("../json/test" + bookNode + ".json", function(data) {
 			var $jsontip = $("#article");
 			var strHtml = ""; //存储数据的变量 
 			$jsontip.empty(); //清空内容 
@@ -143,66 +245,5 @@ define(['jquery', 'mui'], function() {
 			//			$("#articleBtn").before(strHtml);
 		})
 	}
-	$(function() {
-		$(document).on('tap', '#pre', function() {
-			console.log(1);
-			bookNode--;
-			getArticle(bookNode);
-			$('html,body').stop().animate({
-				scrollTop: '0px'
-			}, 0)
-		});
-		$(document).on('tap', '#next', function() {
-			bookNode++;
-			getArticle(bookNode);
-			$('html,body').stop().animate({
-				scrollTop: '0px'
-			}, 0)
-		});
-	})
-	
-	$("#readerSet ul li:first-of-type").on('tap',function(){
-		$("#catalog").css("left","0");
-		$("#readerHead,#readerSet").fadeOut('fast');
-		$("#catalog").css('transition','0.5s');
-		
-	});
-	$("#back").on('tap',function(){
-		$("#catalog").css('left','100%');
-		$("#catalog").css('transition','0.5s');
-	});
-	
-//	目录里的目录,书签,笔记
-		var spanLen = document.getElementById("fontColorDiv").getElementsByTagName("span");
-	for(var i = 0; i < spanLen.length; i++) {
-		(function() {
-			var p = i + 1;
-			$("#fontColorDiv span:nth-of-type(" + p + ")").on('tap', function() {
-				$("#bookcontainer").css("background", $("#fontColorDiv span:nth-of-type(" + p + ")>i").css("background"));
-			});
-		})();
-	}
-	
-	for(var i = 0;i<3;i++){
-		(function(){
-			var p = i+1;
-			$("#catalogClass li:nth-of-type("+p+")").on('tap',function(){
-				$("#catalogClass li:nth-of-type("+p+")").css("border-bottom","solid #23a3d5 2px");
-				$("#catalogClass li:nth-of-type("+p+")").siblings().css("border-bottom","none");
-				$(".catalogD").css("display","none");
-				$(".catalogD").eq(p-1).css("display","block");
-			});
-		})()
-	}
-//	目录里的章节
-	var chapterLen = $(".chapter li").length;
-	for(var i = 0;i<chapterLen;i++){
-		(function(){
-			var p = i+1;
-			$(".chapter li:nth-of-type("+p+") a").on('tap',function(){
-				getArticle(p);
-				$("#catalog").css("left","100%");
-			});
-		})()
-	}
+window.getArticle = getArticle;
 })

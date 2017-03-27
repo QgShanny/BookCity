@@ -14,14 +14,15 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a href="index.html" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">书籍管理</h1>
+			<h1 class="mui-title">卖家书籍管理</h1>
 		</header>
 		
-		<table class="backManager" id="allBookList" border="">
+		<table class="backManager" id="allSaleBookList" border="">
 			<tr>
 				<th>序号</th>
 				<th>书名</th>
 				<th>作者</th>
+				<th>价格</th>
 				<th>操作</th>
 			</tr>
 		</table>
@@ -61,6 +62,11 @@
 			<div class="mui-input-row">
 				<label for="imgUrl">封面地址</label>
 				<input type="text" name="imgUrl" id="imgUrl" class="mui-input-clear" value="" />
+			</div>
+			
+			<div class="mui-input-row">
+				<label for="price">价格</label>
+				<input type="text" name="price" id="price" class="mui-input-clear" value="" />
 			</div>
 		</form>
 		<div class="buttonWrap">

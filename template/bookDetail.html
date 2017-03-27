@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="../css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="../css/common/common.css" />
+		<link rel="stylesheet" type="text/css" href="../css/main.css" />
+		<script src="https://cdn.wilddog.com/js/client/current/wilddog.js"></script>
+		<title>书籍详情</title>
+	</head>
+	<body>
+			<div>
+				<a href="index.html" class="mui-icon mui-icon-arrowleft backto" id="back"></a>
+				<i style="background: url(../img/index1.jpg);" class="bookLogo"></i>
+				<span class="spanName bookName">书籍名称</span>
+				<hr class="spanNameHr" />
+			</div>
+			<div class="bookMsg" >
+				<img id="bookImg" style="float: left;"/>
+				<i class="mui-icon mui-action-menu mui-icon-search" id="collection"></i>
+				<div style="float: left;">
+					<h4 class="bookName">书籍名称</h4>
+					<span id="author">作者</span>&nbsp;|&nbsp;<span id="from">出版社</span>
+					<p id="classIs">类型</p>
+				</div>
+				<button type="button" class="mui-btn mui-btn-primary mui-btn-outlined">阅读</button>
+			</div>
+			<div class="clearfix">
+				
+			</div>
+			<hr class="spanNameHr" style="margin-top: 20px; border-top: 1px dashed #23a3d5;" />
+			<ul id="bookClass">
+				<li>简介</li>
+				<li>目录</li>
+			</ul>
+			
+			<p class="bookIntroduce">
+				这是一首简单的小情歌这是一首简单的小情歌这是一首简单的小情歌这是一首简单的小情歌这是一首简单的小情歌这是一首简单的小情歌这是一首简单的小情歌
+			</p>
+			<ul class="mui-table-view catalogD bookChapter">
+			    <li class="mui-table-view-cell">
+			        <a class="mui-navigate-right">第一章</a>
+			    </li>
+			    <li class="mui-table-view-cell">
+			        <a class="mui-navigate-right">第二章</a>
+			    </li>
+			    <li class="mui-table-view-cell">
+			        <a class="mui-navigate-right">第三章</a>
+			    </li>
+			</ul>
+		<script data-main = "../js/bookOperation" src="../js/lib/require.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>

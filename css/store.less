@@ -1,0 +1,71 @@
+//主题颜色
+@backColor: #eff3f5;
+@Color: #23a3d5;
+@blackColor: rgba(0, 0, 0, 0.64);
+@display: inline-block;
+.storeMsg {
+    .bgImg {
+        width: 100%;
+        filter:blur(5px);
+        position: absolute;
+    }
+    .userHead {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        position: relative;
+        top: 30px;
+        left: 20px;
+        float: left;
+    }
+    .storeName {
+        color: black;
+        float: left;
+        position: relative;
+        left: 40px;
+        top: 40px;
+    }
+    .storeDescription {
+        color: black;
+        position: relative;
+        top: 70px;
+        left: -15px;
+    }
+}
+.allBooks {
+    margin-top: 220px;
+    .book {
+        img {
+            width: 80px;
+            height: 100px;
+            float: left;
+            margin-left: 20px;
+            margin-right: 20px;
+            border-radius: 8px;
+        }
+        p.bookName {
+            position: relative;
+            top: 20px;
+        }
+        p.price {
+            position: relative;
+            top: 10px;
+        }
+        button {
+            float: right;
+            right: 20px;
+            margin-top: -60px;
+            color: @Color;
+            border: @Color solid 1px;
+            
+        }
+    }
+    .clearfix {
+        position: relative;
+        top: 10px;
+        border-bottom: solid 1px rgba(35, 163, 213, 0.44);
+        margin-left: 5px;
+        margin-right: 5px;
+        margin-bottom: 20px;
+    }
+}

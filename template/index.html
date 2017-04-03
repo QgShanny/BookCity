@@ -36,10 +36,7 @@
 							</ul>
 							<ul>
 								<li>
-									<a href=""><i class="mui-icon mui-icon-minus"></i>我的收藏</a>
-								</li>
-								<li>
-									<a href=""><i class="mui-icon mui-icon-minus"></i>今日签到</a>
+									<a href="" id="myCollect"><i class="mui-icon mui-icon-minus"></i>我的收藏</a>
 								</li>
 								<li>
 									<a href="" id="submitSuggest"><i class="mui-icon mui-icon-minus"></i>意见反馈</a>
@@ -48,10 +45,13 @@
 									<a href="" id="manage"><i class="mui-icon mui-icon-minus"></i>后台管理</a>
 								</li>
 								<li>
+									<a href="" id="mySelf"><i class="mui-icon mui-icon-minus"></i>我的资料</a>
+								</li>
+								<li>
 									<a href="" id="logout"><i class="mui-icon mui-icon-minus"></i>退出登录</a>
 								</li>
 								<li>
-									<a href=""><i class="mui-icon mui-icon-minus"></i>我的设置</a>
+									<a href=""><i class="mui-icon mui-icon-minus"></i>版本信息</a>
 								</li>
 							</ul>
 						</div>
@@ -66,13 +66,18 @@
 					<a class="mui-icon mui-icon-search mui-pull-right" href="" id="selectPage"></a>
 					<ul id="headerNav" class="nav nav-tabs mui-pull-right">
 						<li id="bookCase">
-							<a href="#home" data-toggle="tab">
+							<a href="" data-toggle="tab">
 								书架
 							</a>
 						</li>
 						<li id="bookCity">
-							<a href="#ios" data-toggle="tab">
+							<a href="" data-toggle="tab">
 								书城
+							</a>
+						</li>
+						<li id="bookSale">
+							<a href="" data-toggle="tab">
+								商家
 							</a>
 						</li>
 					</ul>
@@ -80,24 +85,6 @@
 						
 					</span>
 				</header>
-				<!--<nav class="mui-bar mui-bar-tab">
-					<a class="mui-tab-item mui-active">
-						<span class="mui-icon mui-icon-home"></span>
-						<span class="mui-tab-label">首页</span>
-					</a>
-					<a class="mui-tab-item">
-						<span class="mui-icon mui-icon-phone"></span>
-						<span class="mui-tab-label">电话</span>
-					</a>
-					<a class="mui-tab-item">
-						<span class="mui-icon mui-icon-email"></span>
-						<span class="mui-tab-label">邮件</span>
-					</a>
-					<a class="mui-tab-item">
-						<span class="mui-icon mui-icon-gear"></span>
-						<span class="mui-tab-label">设置</span>
-					</a>
-				</nav>-->
 				<div class="mui-content mui-scroll-wrapper">
 					<div class="mui-scroll">
 						<!-- 主界面具体展示内容 -->
@@ -1319,7 +1306,9 @@
 								</div>
 
 							</div>
-
+							<div class="indexShow" id="showSale">
+								
+							</div>
 						</div>
 
 					</div>

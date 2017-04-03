@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>用户信息</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/common/mui.picker.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/main.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" class="headerafter">
+			<a href="../index.html" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left back"></a>
+			<h1 class="mui-title">用户信息</h1>
+		</header>
+		<div class="mui-input-group headerafter userMsg">
+			<div class="mui-input-row userHead">
+				<label>头像：</label>
+				<a class="mui-navigate-right">
+					<span id="picture" class="pull-right">
+						<img />
+					</span>
+			    </a>
+			</div>
+			<div class="mui-input-row">
+				<label>用户名：</label>
+				<a class="mui-navigate-right">
+					<span id="userName" class="pull-right">用户名</span>
+			    </a>
+			</div>
+			<div class="mui-input-row">
+				<label>号码：</label>
+				<a class="mui-navigate-right">
+					<span id="phone" class="pull-right">用户名</span>
+			    </a>
+			</div>
+			<div class="mui-input-row">
+				<label>邮箱：</label>
+				<a class="mui-navigate-right">
+					<span id="email" class="pull-right">用户名</span>
+			    </a>
+			</div>
+			<div class="mui-input-row">
+				<label>密码：</label>
+				<a class="mui-navigate-right">
+					<span id="password" class="pull-right">点击修改</span>
+			    </a>
+			</div>
+			<div class="mui-input-row">
+				<label>性别：</label>
+				<a class="mui-navigate-right">
+					<span id="sex" class="pull-right">用户名</span>
+			    </a>
+			</div>
+			<div class="mui-input-row">
+				<label>生日：</label>
+				<a class="mui-navigate-right">
+					<span id="birthDay" class="pull-right" data-options='{"type":"date","beginYear":1956,"endYear":2016,"value":"1990-10-10"}'>用户名</span>
+			    </a>
+			</div>
+			<div class="mui-input-row">
+				<label>地址：</label>
+				<a class="mui-navigate-right">
+					<span id="address" class="pull-right">用户名</span>
+			    </a>
+			</div>
+			<div class="mui-input-row">
+				<label>商家：</label>
+				<a class="mui-navigate-right">
+					<span id="isSaler" class="pull-right">用户名</span>
+			    </a>
+			</div>
+			
+		</div>
+		<p align="center">提示：商家选项意思为是否注册为商家，可上传书籍，卖书</p>
+		<input type="file" name="userPic" id="userPic" value="" style="display: none;" />
+		<script src="https://cdn.wilddog.com/js/client/current/wilddog.js"></script>
+		<script data-main = "../../js/user" src="../../js/lib/require.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+</html>

@@ -12,9 +12,8 @@ require.config({
 	define(['jquery','mui','reader','data'], function() {
 		
 	
-	getBookMsg(getStorageNow('imgUrl'),getStorageNow('bookName'),getStorageNow('author'),getStorageNow('classIs'),getStorageNow('from'),getStorageNow('msg'));
-//	$("#bookImg").attr("src","http://static.book.hao123.com/upload/hao123/cover/2/10/50430_2_1592508.jpg");
-	console.log($("#bookMsg"));
+//	getBookMsg(getStorageNow('imgUrl'),getStorageNow('bookName'),getStorageNow('author'),getStorageNow('classIs'),getStorageNow('from'),getStorageNow('msg'));
+	getBookMsg(getStorageNow("bookKey"));
 	for(var i = 0; i < 2; i++) {
 		(function() {
 			var p = i + 1;
@@ -32,7 +31,7 @@ require.config({
 		})()
 	}
 	
-		//	目录里的章节
+	//	目录里的章节
 	var chapterLen = $(".bookChapter li").length;
 	for(var i = 0; i < chapterLen; i++) {
 		(function() {
@@ -46,18 +45,26 @@ require.config({
 	
 //	收藏
 	$("#collection").on('tap',function(){
-		var collectNum = getStorageNow('key');
+		var collectNum = getStorageNow('bookKey');
 		var userKey = getStorageNow('userKey');
-		ref = new Wilddog("https://bookcity2017.wilddogio.com/users/"+userKey+"/collections");
+		ref = new Wilddog("https://bookcity2017.wilddogio.com/users/"+userKey+"/collectionbook");
 		var newref = ref.push({
-			collection:collectNum
+			bookKey:collectNum
 		});
-		var postId = newref.key();
-		mui.alert("收藏成功",function(){
-			ref = new Wilddog("https://bookcity2017.wilddogio.com/users/"+userKey+"/collections/"+postId);
-			ref.update({
-				key:postId
-			});
-		});
+		mui.alert("收藏成功");
+		
 	})
+	
+	function getBookMsg(key){
+		var ref = new Wilddog("https://bookcity2017.wilddogio.com/books/"+key);
+		ref.on('value',function(snap){
+			var jsonStr = snap.val();
+			$("#bookImg").attr("src",jsonStr.imgUrl);
+			$(".bookName").text(jsonStr.bookName);
+			$("#author").text(jsonStr.author);
+			$("#from").text(jsonStr.from);
+			$("#classIs").find('span').text(jsonStr.Class);
+			$(".bookIntroduce").text(jsonStr.msg);
+		})
+	}
 });

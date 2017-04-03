@@ -5,7 +5,8 @@
 #headerNav li:first-of-type a {
   color: white;
 }
-#headerNav li:nth-of-type(2) a {
+#headerNav li:nth-of-type(2) a,
+#headerNav li:nth-of-type(3) a {
   color: black;
 }
 #headerNav li a {
@@ -14,10 +15,10 @@
 }
 #wrapCity {
   position: relative;
-  width: 200%;
+  width: 300%;
 }
 #wrapCity .indexShow {
-  width: 50%;
+  width: 33.333333333%;
   float: left;
 }
 #theme {
@@ -84,6 +85,30 @@
   font-size: 18px;
   margin-right: 5px;
   color: #23a3d5;
+}
+#showSale .store img {
+  width: 80px;
+  height: 80px;
+  border-radius: 5px;
+  float: left;
+  margin-left: 15px;
+  margin-top: 20px;
+}
+#showSale .store h5 {
+  float: left;
+  margin-left: 15px;
+  position: relative;
+  top: 30px;
+}
+#showSale .store p {
+  position: relative;
+  top: 60px;
+  left: -55px;
+}
+#showSale .store i {
+  float: right;
+  margin-right: 20px;
+  margin-top: 10px;
 }
 #userHead {
   height: 30%;

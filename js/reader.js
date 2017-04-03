@@ -25,7 +25,7 @@ define(['jquery', 'mui'], function() {
 	var flagFont = 0; //字体背景的设置标识
 	$("#bookcontainer").on("tap", function() {
 		if(flagFont == 1) {
-//			$("#detailSet").css("bottom", "-172px");
+			//			$("#detailSet").css("bottom", "-172px");
 			$("#detailSet").fadeOut('fast');
 			flagFont = 0;
 		} else {
@@ -52,12 +52,12 @@ define(['jquery', 'mui'], function() {
 		if(flagLight == 0) {
 			$("#bookcontainer").css("background", "black");
 			$("#readerSet li:nth-of-type(2) a span").text("夜间");
-			$(".articleTitle").css("color","#8f8f94");
+			$(".articleTitle").css("color", "#8f8f94");
 			flagLight = 1;
 		} else {
 			$("#bookcontainer").css("background", "lightgoldenrodyellow");
 			$("#readerSet li:nth-of-type(2) a span").text("日间");
-			$(".articleTitle").css("color","black");
+			$(".articleTitle").css("color", "black");
 			flagLight = 0;
 		}
 	});
@@ -93,37 +93,36 @@ define(['jquery', 'mui'], function() {
 		$("#bookcontainer p").css("font-size", temp + "px");
 	});
 
-if($("#fontColorDiv").length>0){
-	var spanLen = document.getElementById("fontColorDiv").getElementsByTagName("span");
-	for(var i = 0; i < spanLen.length; i++) {
-		(function() {
-			var p = i + 1;
-			$("#fontColorDiv span:nth-of-type(" + p + ")").on('tap', function() {
-				$("#bookcontainer").css("background", $("#fontColorDiv span:nth-of-type(" + p + ")>i").css("background"));
-				if(p == 1){
-					$("#article>p,.articleTitle").css("color","rgba(255, 255, 255, 0.9)");
-				}
-				else{
-					$("#article>p").css("color","#8f8f94");
-					$(".articleTitle").css("color","black");
-				}
-			});
-		})();
+	if($("#fontColorDiv").length > 0) {
+		var spanLen = document.getElementById("fontColorDiv").getElementsByTagName("span");
+		for(var i = 0; i < spanLen.length; i++) {
+			(function() {
+				var p = i + 1;
+				$("#fontColorDiv span:nth-of-type(" + p + ")").on('tap', function() {
+					$("#bookcontainer").css("background", $("#fontColorDiv span:nth-of-type(" + p + ")>i").css("background"));
+					if(p == 1) {
+						$("#article>p,.articleTitle").css("color", "rgba(255, 255, 255, 0.9)");
+					} else {
+						$("#article>p").css("color", "#8f8f94");
+						$(".articleTitle").css("color", "black");
+					}
+				});
+			})();
+		}
+
+		var fontSpaceLen = document.getElementById("fontSpace").getElementsByTagName("span");
+		for(var i = 0; i < fontSpaceLen.length; i++) {
+			(function() {
+				var p = i + 1;
+				$("#fontSpace span:nth-of-type(" + p + ")").on("tap", function() {
+					var h = 15 + 5 * p;
+					var w = p;
+					$("#article>p").css("line-height", h + "px");
+					$("#article>p").css("letter-spacing", w + "px");
+				});
+			})()
+		}
 	}
-	
-	var fontSpaceLen = document.getElementById("fontSpace").getElementsByTagName("span");
-	for(var i = 0;i<fontSpaceLen.length;i++){
-		(function(){
-			var p = i + 1;
-			$("#fontSpace span:nth-of-type("+p+")").on("tap",function(){
-				var h = 15 + 5*p;
-				var w = p;
-				$("#article>p").css("line-height",h+"px");
-				$("#article>p").css("letter-spacing",w+"px");
-			});
-		})()
-	}
-}
 	//	$("#moreColor").on('tap', function() {
 	//		Jcolor(this).color();
 	//	});
@@ -145,7 +144,6 @@ if($("#fontColorDiv").length>0){
 			//window.scrollTo(0,0); 
 		});
 	})
-
 
 	$(function() {
 		$(document).on('tap', '#pre', function() {
@@ -184,51 +182,46 @@ if($("#fontColorDiv").length>0){
 		flagBar = 0;
 	});
 
-if($("#fontColorDiv").length>0){
-	var spanLen = document.getElementById("fontColorDiv").getElementsByTagName("span");
-	for(var i = 0; i < spanLen.length; i++) {
-		(function() {
-			var p = i + 1;
-			$("#fontColorDiv span:nth-of-type(" + p + ")").on('tap', function() {
-				$("#bookcontainer").css("background", $("#fontColorDiv span:nth-of-type(" + p + ")>i").css("background"));
-			});
-		})();
+	if($("#fontColorDiv").length > 0) {
+		var spanLen = document.getElementById("fontColorDiv").getElementsByTagName("span");
+		for(var i = 0; i < spanLen.length; i++) {
+			(function() {
+				var p = i + 1;
+				$("#fontColorDiv span:nth-of-type(" + p + ")").on('tap', function() {
+					$("#bookcontainer").css("background", $("#fontColorDiv span:nth-of-type(" + p + ")>i").css("background"));
+				});
+			})();
+		}
+		//	目录里的目录,书签,笔记
+		for(var i = 0; i < 3; i++) {
+			(function() {
+				var p = i + 1;
+				$("#catalogClass li:nth-of-type(" + p + ")").on('tap', function() {
+					$("#catalogClass li:nth-of-type(" + p + ")").css("border-bottom", "solid #23a3d5 2px");
+					$("#catalogClass li:nth-of-type(" + p + ")").siblings().css("border-bottom", "none");
+					$(".catalogD").css("display", "none");
+					$(".catalogD").eq(p - 1).css("display", "block");
+				});
+			})()
+		}
+		//	目录里的章节
+		var chapterLen = $(".chapter li").length;
+		for(var i = 0; i < chapterLen; i++) {
+			(function() {
+				var p = i + 1;
+				$(".chapter li:nth-of-type(" + p + ") a").on('tap', function() {
+					getArticle(p);
+					$("#catalog").css("left", "100%");
+				});
+			})()
+		}
 	}
-	//	目录里的目录,书签,笔记
-	for(var i = 0; i < 3; i++) {
-		(function() {
-			var p = i + 1;
-			$("#catalogClass li:nth-of-type(" + p + ")").on('tap', function() {
-				$("#catalogClass li:nth-of-type(" + p + ")").css("border-bottom", "solid #23a3d5 2px");
-				$("#catalogClass li:nth-of-type(" + p + ")").siblings().css("border-bottom", "none");
-				$(".catalogD").css("display", "none");
-				$(".catalogD").eq(p - 1).css("display", "block");
-			});
-		})()
+	if($("#next").length > 0) {
+		var bookNode = 1;
+		getArticle(bookNode);
 	}
-	//	目录里的章节
-	var chapterLen = $(".chapter li").length;
-	for(var i = 0; i < chapterLen; i++) {
-		(function() {
-			var p = i + 1;
-			$(".chapter li:nth-of-type(" + p + ") a").on('tap', function() {
-				getArticle(p);
-				$("#catalog").css("left", "100%");
-			});
-		})()
-	}
-}
-if($("#next").length>0){
-	var bookNode = 1;
-	getArticle(bookNode);
-}
+
 	function getArticle(bookNode) {
-//		if($("#next").length>0){
-//			var route = "../../json/test";
-//		}
-//		else{
-//			var route = "../json/test";			
-//		}
 		$.getJSON("../json/test" + bookNode + ".json", function(data) {
 			var $jsontip = $("#article");
 			var strHtml = ""; //存储数据的变量 
@@ -242,8 +235,7 @@ if($("#next").length>0){
 			});
 			strHtml += "<div id='articleBtn'><button type='button' class='mui-btn mui-btn-outlined' id='pre'>上一章</button><button type='button' class='mui-btn mui-btn-outlined' id='next'>下一章</button></div>";
 			$jsontip.html(strHtml); //显示处理后的数据
-			//			$("#articleBtn").before(strHtml);
 		})
 	}
-window.getArticle = getArticle;
+	window.getArticle = getArticle;
 })

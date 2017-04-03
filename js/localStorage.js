@@ -6,11 +6,6 @@ define(['jquery'], function() {
 			data: value,
 			time: setTime
 		}));
-//		console.log(localStorage.getItem(key));
-		//	setTimeout(function() {
-		//		localStorage.removeItem(key);
-		//		console.log("退出");
-		//	}, 1000 * 60 * 60 * 2);	//两个小时后自动清除缓存
 	}
 
 	function getStorage(key, exp) {

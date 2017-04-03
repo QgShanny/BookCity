@@ -110,11 +110,14 @@ define(['jquery', 'mui', 'data'], function() {
 			if(usersArr[i].manager == 1) {
 				var identity = "管理员";
 			}
-			if(usersArr[i].seller == 1) {
-				var identity = "商家";
+			if(usersArr[i].seller == 1 && usersArr[i].sureSeller != 1) {
+				var identity = "申请商家";
 			}
 			if(usersArr[i].manager == 0 && usersArr[i].seller == 0) {
 				var identity = "普通";
+			}
+			if(usersArr[i].sureSeller == 1) {
+				var identity = "商家";
 			}
 			console.log(usersArr[i].manager + "  " + identity);
 			userList += "<tr class='userItem'><td>" + usersArr[i].userName + "</td><td>" + usersArr[i].sex + "</td><td>" + usersArr[i].phone + "</td><td>" + identity + "</td><td><i class='mui-icon mui-icon-trash' key='" + usersArr[i].key + "'></i><i class='mui-icon mui-icon-compose' key='" + usersArr[i].key + "'></i></td></tr>";
@@ -135,7 +138,7 @@ define(['jquery', 'mui', 'data'], function() {
 		}
 
 		for(i in booksArr) {
-			bookList += "<tr class='saleItem'><td>" + booksArr[i].bookId + "</td><td>" + booksArr[i].bookName + "</td><td>" + booksArr[i].author + "</td><td>￥" + 1 + "</td><td><i class='mui-icon mui-icon-trash' key='" + booksArr[i].key + "'></i><i class='mui-icon mui-icon-compose' key='" + booksArr[i].key + "'></i></td></tr>";
+			bookList += "<tr class='saleItem'><td>" + booksArr[i].bookId + "</td><td>" + booksArr[i].bookName + "</td><td>" + booksArr[i].author + "</td><td>￥" + booksArr[i].price + "</td><td><i class='mui-icon mui-icon-trash' key='" + booksArr[i].key + "'></i><i class='mui-icon mui-icon-compose' key='" + booksArr[i].key + "'></i></td></tr>";
 		}
 		$(bookList).appendTo($("#allSaleBookList"));
 	});
@@ -260,6 +263,19 @@ define(['jquery', 'mui', 'data'], function() {
 				$("#phone").val(snapshot.val().phone);
 				$("#email").val(snapshot.val().email);
 				$("#password").val(snapshot.val().password);
+				var sureSellerFlag = snapshot.val().sureSeller;
+				console.log(sureSellerFlag);
+				if(sureSellerFlag == 1) {
+					$(".sureSeller").addClass("mui-active");
+				} else {
+					$(".sureSeller").removeClass("mui-active");
+				}
+				var managerFlag = snapshot.val().manager;
+				if(managerFlag == 1) {
+					$(".manager").addClass("mui-active");
+				} else {
+					$(".manager").removeClass("mui-active");
+				}
 			});
 			$("#userUpdate").fadeIn('fast');
 
@@ -268,13 +284,22 @@ define(['jquery', 'mui', 'data'], function() {
 				var phone = $("#phone").val();
 				var email = $("#email").val();
 				var password = $("#password").val();
-				var seller = 0;
+				var sureSeller = 0;
+				var manager = 0;
 				if($("#sex li:first-of-type").hasClass("mui-selected")) {
 					var sex = "男";
 				} else {
 					sex = "女";
 				}
-
+				if($(".sureSeller").hasClass("mui-active")) {
+					sureSeller = 1;
+					console.log("该商家通过认证");
+				}
+				if($(".manager").hasClass("mui-active")) {
+					manager = 1;
+					console.log("该用户是管理员");
+				}
+				console.log(sureSeller);
 				if($.trim(username).length == 0 ||
 					$.trim(phone).length == 0 ||
 					$.trim(email).length == 0 ||
@@ -313,10 +338,11 @@ define(['jquery', 'mui', 'data'], function() {
 					"password": password,
 					"sex": sex,
 					"score": 10,
-					"manager": 0,
-					"seller": seller
+					"manager": manager,
+					"sureSeller": sureSeller
 				});
 
+				setStorage("manager", manager);
 				mui.alert("修改成功", function() {
 					$("#userUpdate").fadeOut('fast');
 				});
@@ -401,12 +427,38 @@ define(['jquery', 'mui', 'data'], function() {
 		});
 	})
 
-	$("#userUpdate").on('tap', function() {
+	$("#cancle").on('tap', function() {
 		$("#userUpdate").fadeOut();
 	});
-	$("#bookUpdate").on('tap', function() {
+	$("#cancle").on('tap', function() {
 		$("#bookUpdate").fadeOut();
 	});
 
-	window.gitBookMsg = gitBookMsg;
+	$(".backManager li:first-of-type a").on('tap', function() {
+		if(getStorageNow('manager') == 1) {
+			window.location.href = 'bookManager.html';
+		} else {
+			mui.alert('您没有权限进入');
+		}
+	});
+	$(".backManager li:nth-of-type(2) a").on('tap', function() {
+		if(getStorageNow('manager') == 1) {
+			window.location.href = 'user.html';
+		} else {
+			mui.alert('您没有权限进入');
+		}
+	});
+	$(".backManager li:nth-of-type(3) a").on('tap', function() {
+		window.location.href = 'salerManager.html';
+	});
+	$(".backManager li:nth-of-type(4) a").on('tap', function() {
+		if(getStorageNow('manager') == 1) {
+			window.location.href = 'suggestManager.html';
+		} else {
+			mui.alert('您没有权限进入');
+		}
+	});
+
+
+window.gitBookMsg = gitBookMsg;
 })

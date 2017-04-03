@@ -12,79 +12,62 @@ define(['jquery', 'localStorage'], function() {
 	ref.on("value", function(snapshot) {
 		jsonStr = snapshot.val();
 		for(i in jsonStr) {
-			booksArr.push(jsonStr[i]);
-		}
-
-		for(i in booksArr) {
-			//男频推荐内容类别
-			if(booksArr[i].Class == "男生") {
-				boyArr.push(booksArr[i]);
+			if(jsonStr[i].Class == "男生"){	
+				$("<li class='mui-table-view-cell'><a class='mui-navigate-right'>" + jsonStr[i].bookName + "</a></li>").appendTo($("#boyTui ul:nth-of-type(2)"));
 			}
-
-			if(booksArr[i].Class == "女生") {
-				girlArr.push(booksArr[i]);
+			if(jsonStr[i].Class == "女生"){		
+				$("<li key="+i+" class='mui-table-view-cell'><a class='mui-navigate-right'>" + jsonStr[i].bookName + "</a></li>").appendTo($("#girlTui ul:nth-of-type(2)"));		
 			}
 		}
 
-		//把男生书本插入列表里面
-		for(i in boyArr) {
-			var li = "<li class='mui-table-view-cell'><a class='mui-navigate-right'>" + boyArr[i].bookName + "</a></li>";
-			$("<li class='mui-table-view-cell'><a class='mui-navigate-right'>" + boyArr[i].bookName + "</a></li>").appendTo($("#boyTui ul:nth-of-type(2)"));
-		}
-		//把女生书本插入列表里面
-		for(i in girlArr) {
-			var li = "<li class='mui-table-view-cell'><a class='mui-navigate-right'>" + girlArr[i].bookName + "</a></li>";
-			$("<li class='mui-table-view-cell'><a class='mui-navigate-right'>" + girlArr[i].bookName + "</a></li>").appendTo($("#girlTui ul:nth-of-type(2)"));
-		}
 		
-//		$(function(){
-		for(var i = 0;i<girlArr.length;i++){
-			console.log(i);
-			var p = i + 1;
-			(function(){
-				$(document).on('tap','#girlTui ul:nth-of-type(2) li:nth-last-of-type('+p+')',function(){
-					console.log(p);
-					setStorage('imgUrl',girlArr[p-1].imgUrl);
-					setStorage('bookName',girlArr[p-1].bookName);
-					setStorage('author',girlArr[p-1].author);
-					setStorage('classIs',girlArr[p-1].Class);
-					setStorage('from',girlArr[p-1].from);
-					setStorage('msg',girlArr[p-1].msg);
-					setStorage('key',girlArr[p-1].key);
+		//女生分区点击书籍进入书籍详情
+		for(var i = 0; i < 2; i++) {
+			(function() {
+				var p = i + 1;
+				$(document).on('tap', '#girlTui ul:nth-of-type(2) li:nth-of-type(' + p + ')', function() {
+					setStorage('bookKey', $(this).attr("key"));
 					window.location.href = "bookDetail.html";
 				});
 			})()
 		}
-//	})
+
 	});
 
-	
-
-	
-	
-	function getBookMsg(url,bookname,author,classis,from,msg){
-		$("#bookImg").attr("src",url);
-		$(".bookName").text(bookname);
-		$("#author").text(author);
-		$("#from").text(from);
-		$("#classIs").text(classis);
-		$(".bookIntroduce").text(msg);
-	}
-				
 	function addLi(snap) {
 		var li = "<li class='mui-table-view-cell'><a class='mui-navigate-right'>" + snap.val().BookName + "</a></li>";
 		return li;
 	}
-	var jsonUserStr; //之后要优化
+
+	var jsonStr; //用户的json数据
 	var usersArr = [];
-	var refUser = new Wilddog("https://bookcity2017.wilddogio.com/Users");
+	storesArr = [];
+	var store = "";
+	var ref = new Wilddog("https://bookcity2017.wilddogio.com/users");
 	//on 有变化就读取
-	refUser.on("value", function(snapshot) {
-		var jsonUserStr = snapshot.val();
-		for(i in jsonUserStr) {
-			usersArr.push(jsonUserStr[i]);
+	ref.once("value", function(snapshot) {
+		$(".store").remove();
+		var jsonStr = snapshot.val();
+		for(i in jsonStr) {
+			if(jsonStr[i].sureSeller == 1){
+				store += '<div class="store" storeID = '+jsonStr[i].key + '>'
+						+ '<img class="storeImg" src="../img/index1.jpg"/><h5>' + jsonStr[i].storeName 
+						+ '</h5><p>'+jsonStr[i].explain+'</p><i class="mui-icon mui-icon-search collectStore"></i>' 
+						+ '</div><div class="clearfix"></div>';
+			}
+			$("#showSale").html(store);
 		}
 	});
+	
+	//	收藏店家
+	$(document).on('tap', '.collectStore', function() {
+		var key = $(this).parent().attr("storeID");
+		ref = new Wilddog("https://bookcity2017.wilddogio.com/users/"+getStorageNow("userKey")+"/collectionStore");
+		var newref = ref.push({
+			storeKey:key
+		});
+		mui.alert("收藏成功");
+	})
 
 	//判断用户是否登录,或登录是否还有效
 	var obj = localStorage.getItem("userId");
@@ -109,8 +92,9 @@ define(['jquery', 'localStorage'], function() {
 		if(signFlag == 1) {
 			mui.alert("签到成功", function() {
 				//更新积分
-				var ref = new Wilddog("https://bookcity2017.wilddogio.com/Users"); //找到对应的用户
-				var newRef = ref.child("-Ke9Vh_OrBIKqbBQt2qg");
+				var key = getStorageNow("userKey");
+				var ref = new Wilddog("https://bookcity2017.wilddogio.com/users"); //找到对应的用户
+				var newRef = ref.child(key);
 				scoreObj = parseInt(scoreObj) + 10;
 				newRef.update({
 					"Score": scoreObj
@@ -181,7 +165,7 @@ define(['jquery', 'localStorage'], function() {
 		}
 	});
 
+
 	window.loginFun = loginFun;
 	window.sign = sign;
-	window.getBookMsg = getBookMsg;
 })

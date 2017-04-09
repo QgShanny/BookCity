@@ -13,12 +13,13 @@ define(['jquery', 'mui', 'localStorage'], function() {
 
 	var jsonStr; //用户的json数据
 	var ref = new Wilddog("https://bookcity2017.wilddogio.com/users");
+	var usersArr = [];
 	//on 有变化就读取
 	ref.on("value", function(snapshot) {
 		var jsonStr = snapshot.val();
-		//		for(i in jsonStr) {
-		//			usersArr.push(jsonStr[i]);
-		//		}
+				for(i in jsonStr) {
+					usersArr.push(jsonStr[i]);
+				}
 		$("#login").click(function() {
 			var phone = $.trim($("#phone").val());
 			var password = $.trim($("#password").val());
@@ -39,7 +40,7 @@ define(['jquery', 'mui', 'localStorage'], function() {
 					setStorage("userName", jsonStr[i].userName);
 					setStorage("score", jsonStr[i].score);
 					setStorage("manager", jsonStr[i].manager);
-					setStorage("userKey", jsonStr[i].key);
+//					setStorage("userKey", jsonStr[i].key);
 					setStorage("sureSeller", jsonStr[i].sureSeller);
 					console.log(jsonStr[i].phone + "  " + jsonStr[i].password);
 					break;

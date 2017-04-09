@@ -106,21 +106,21 @@ define(['jquery', 'mui', 'data'], function() {
 			usersArr.push(jsonStr[i]);
 		}
 
-		for(i in usersArr) {
-			if(usersArr[i].manager == 1) {
+		for(i in jsonStr) {
+			if(jsonStr[i].manager == 1) {
 				var identity = "管理员";
 			}
-			if(usersArr[i].seller == 1 && usersArr[i].sureSeller != 1) {
+			if(jsonStr[i].seller == 1 && jsonStr[i].sureSeller != 1) {
 				var identity = "申请商家";
 			}
-			if(usersArr[i].manager == 0 && usersArr[i].seller == 0) {
+			if(jsonStr[i].manager == 0 && jsonStr[i].seller == 0) {
 				var identity = "普通";
 			}
-			if(usersArr[i].sureSeller == 1) {
+			if(jsonStr[i].sureSeller == 1) {
 				var identity = "商家";
 			}
-			console.log(usersArr[i].manager + "  " + identity);
-			userList += "<tr class='userItem'><td>" + usersArr[i].userName + "</td><td>" + usersArr[i].sex + "</td><td>" + usersArr[i].phone + "</td><td>" + identity + "</td><td><i class='mui-icon mui-icon-trash' key='" + usersArr[i].key + "'></i><i class='mui-icon mui-icon-compose' key='" + usersArr[i].key + "'></i></td></tr>";
+			console.log(jsonStr[i].manager + "  " + identity);
+			userList += "<tr class='userItem'><td>" + jsonStr[i].userName + "</td><td>" + jsonStr[i].sex + "</td><td>" + jsonStr[i].phone + "</td><td>" + identity + "</td><td><i class='mui-icon mui-icon-trash' key='" + i + "'></i><i class='mui-icon mui-icon-compose' key='" + i + "'></i></td></tr>";
 		}
 		$(userList).appendTo($("#allUserList"));
 	});

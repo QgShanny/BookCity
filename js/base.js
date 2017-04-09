@@ -91,7 +91,7 @@ define(['jquery', 'localStorage'], function() {
 	});
 
 	$("#manage").on('tap', function() {
-		var userObj = localStorage.getItem("userId");
+		var userObj = localStorage.getItem("userKey");
 		if(userObj == null) {
 			var btnArray = ['取消', '确认'];
 			mui.confirm("您未登录,是否登录？", "", btnArray, function(e) {
@@ -144,5 +144,12 @@ define(['jquery', 'localStorage'], function() {
 		if(flag == 1){
 			window.location.href = 'self/collection.html';
 		}
-	})
+	});
+	
+//	版本信息
+	$("#msg").on('tap',function(){
+		window.location.href = 'msg.html';
+	});
+	
+
 })

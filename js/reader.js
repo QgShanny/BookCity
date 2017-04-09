@@ -1,14 +1,15 @@
 require.config({
 	paths: {
 		"jquery": "lib/jquery-1.9.1",
-		"mui": "lib/mui.min"
+		"mui": "lib/mui.min",
+		"localstorage":'localStorage'
 	},
 	shim: {
 		//no
 	}
 
 });
-define(['jquery', 'mui'], function() {
+define(['jquery', 'mui','localstorage'], function() {
 
 	mui.init()
 	mui.ready(function() {
@@ -17,10 +18,57 @@ define(['jquery', 'mui'], function() {
 		});
 	});
 
+	//记录用户的阅读章节和习惯
+	var refRead = new Wilddog("https://bookcity2017.wilddogio.com/users/"+getStorageNow("userKey")+"/read");
+	refRead.once("value",function(snap){
+		var jsonStr = snap.val();
+		if(jsonStr != null){
+//			阅读章节
+			var bookNode = jsonStr.chap;
+			getArticle(bookNode);		
+			
+//			阅读器的白天黑夜模式
+			var flagLight = jsonStr.flagLight;
+			if(flagLight != null){
+				if(flagLight == 1){
+					$("#bookcontainer").css("background", "black");
+					$("#readerSet li:nth-of-type(2) a span").text("夜间");
+					$(".articleTitle").css("color", "#8f8f94");
+					flagLight = 1;					
+				}
+				else{
+					$("#bookcontainer").css("background", "lightgoldenrodyellow");
+					$("#readerSet li:nth-of-type(2) a span").text("日间");
+					$(".articleTitle").css("color", "black");
+					flagLight = 0;
+				}
+			}
+			
+//			字体大小，暂时还不可做到
+//			var fontSize = jsonStr.fontSize;
+//			console.log(fontSize);
+//			if(fontSize!=null){
+//				$("#fontSizeSpan").text(fontSize);
+//				$("#bookcontainer h4").css("font-size", fontSize + 2 + "px");
+//				$("#bookcontainer p").css("font-size", fontSize + "px");	
+//			}
+			
+//			阅读器的背景颜色
+			var bgColor = jsonStr.bgColor;
+			if(bgColor!=null){
+				$("#bookcontainer").css("background", bgColor);
+			}
+		}
+		else{
+			getArticle(1);
+		}
+	})
+	
 	//返回首页
 	$("#backIndex").on('tap', function() {
 		window.location.href = '../index.html';
 	});
+	
 	var flagBar = 0;
 	var flagFont = 0; //字体背景的设置标识
 	$("#bookcontainer").on("tap", function() {
@@ -47,6 +95,7 @@ define(['jquery', 'mui'], function() {
 		}
 	});
 
+
 	var flagLight = 0;
 	$("#readerSet li:nth-of-type(2) a").on('tap', function() {
 		if(flagLight == 0) {
@@ -54,11 +103,17 @@ define(['jquery', 'mui'], function() {
 			$("#readerSet li:nth-of-type(2) a span").text("夜间");
 			$(".articleTitle").css("color", "#8f8f94");
 			flagLight = 1;
+			refRead.update({
+				flagLight:1
+			});
 		} else {
 			$("#bookcontainer").css("background", "lightgoldenrodyellow");
 			$("#readerSet li:nth-of-type(2) a span").text("日间");
 			$(".articleTitle").css("color", "black");
 			flagLight = 0;
+			refRead.update({
+				flagLight:0
+			});
 		}
 	});
 
@@ -80,6 +135,9 @@ define(['jquery', 'mui'], function() {
 		$("#fontSizeSpan").text(temp);
 		$("#bookcontainer h4").css("font-size", temp + 2 + "px");
 		$("#bookcontainer p").css("font-size", temp + "px");
+		refRead.update({
+			fontSize:temp
+		});
 	});
 	$("#addFontSize").on('tap', function() {
 		var temp = $("#fontSizeSpan").text();
@@ -91,6 +149,9 @@ define(['jquery', 'mui'], function() {
 		$("#fontSizeSpan").text(temp);
 		$("#bookcontainer h4").css("font-size", temp + 2 + "px");
 		$("#bookcontainer p").css("font-size", temp + "px");
+		refRead.update({
+			fontSize:temp
+		});
 	});
 
 	if($("#fontColorDiv").length > 0) {
@@ -143,8 +204,9 @@ define(['jquery', 'mui'], function() {
 			}
 			//window.scrollTo(0,0); 
 		});
-	})
-
+	});
+	
+	
 	$(function() {
 		$(document).on('tap', '#pre', function() {
 			bookNode--;
@@ -189,6 +251,9 @@ define(['jquery', 'mui'], function() {
 				var p = i + 1;
 				$("#fontColorDiv span:nth-of-type(" + p + ")").on('tap', function() {
 					$("#bookcontainer").css("background", $("#fontColorDiv span:nth-of-type(" + p + ")>i").css("background"));
+					refRead.update({
+						bgColor:$("#fontColorDiv span:nth-of-type(" + p + ")>i").css("background")
+					})
 				});
 			})();
 		}
@@ -212,17 +277,20 @@ define(['jquery', 'mui'], function() {
 				$(".chapter li:nth-of-type(" + p + ") a").on('tap', function() {
 					getArticle(p);
 					$("#catalog").css("left", "100%");
+					refRead.update({
+						"chap":p
+					});
 				});
 			})()
 		}
 	}
-	if($("#next").length > 0) {
-		var bookNode = 1;
-		getArticle(bookNode);
-	}
+	
+	
+
+	
 
 	function getArticle(bookNode) {
-		$.getJSON("../json/test" + bookNode + ".json", function(data) {
+		$.getJSON("../../json/test" + bookNode + ".json", function(data) {
 			var $jsontip = $("#article");
 			var strHtml = ""; //存储数据的变量 
 			$jsontip.empty(); //清空内容 

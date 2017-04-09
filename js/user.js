@@ -371,5 +371,7 @@ define([
 
 	$(".back").on('tap', function() {
 		window.location.href = "../index.html";
-	})
+	});
+	
+	
 })

@@ -115,3 +115,20 @@
   margin-right: 10px;
   border-radius: 5px;
 }
+.container {
+  margin-top: 50px;
+}
+ul.msg li {
+  float: none;
+  display: block;
+}
+ul.msg li .version {
+  color: gray;
+  text-align: center;
+}
+ul.msg li #bookHot div canvas {
+  left: -45px !important;
+}
+ul.msg li #container div {
+  margin-top: 10px !important;
+}

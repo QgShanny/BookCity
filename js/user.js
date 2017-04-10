@@ -133,7 +133,7 @@ define([
 		$("#sex").text(jsonStr.sex);
 		$("#email").text(jsonStr.email);
 
-		if(jsonStr.picture == null) {
+		if(jsonStr.userHead == null) {
 			var sex = jsonStr.sex;
 			if(sex == "女") {
 				$("#picture img").attr("src", "../../img/girl.jpg");
@@ -141,7 +141,7 @@ define([
 				$("#picture img").attr("src", "../../img/boy.jpg");
 			}
 		} else {
-			$("#picture img").attr("src", jsonStr.picture);
+			$("#picture img").attr("src", jsonStr.userHead);
 		}
 
 		if(jsonStr.seller == 0 && jsonStr.sureSeller == null) {
@@ -295,8 +295,12 @@ define([
 		imgFile.readAsDataURL(img.files[0]); //从input，file里读取文件
 		imgFile.onload = function() {
 			var imgData = this.result; //base64数据    
-			console.log("图片的base64码为" + imgData);
 			$("#picture img").attr('src', imgData);
+			var ref = new Wilddog("https://bookcity2017.wilddogio.com/users/"+getStorageNow("userKey"));
+			ref.update({
+				userHead : imgData
+			});
+			console.log("图片长度为："+imgData.length);
 		}
 		$("#userPic").val();
 	}

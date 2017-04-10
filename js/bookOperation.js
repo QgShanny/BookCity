@@ -2,14 +2,14 @@ require.config({
 	paths: {
 		"jquery": "lib/jquery-1.9.1",
 		"mui": "lib/mui.min",
-		"reader":"reader",
+//		"reader":"reader",
 		"data":"data"
 	},
 	shim: {
 		//no
 	}
 });
-	define(['jquery','mui','reader','data'], function() {
+	define(['jquery','mui','data'], function() {
 		
 	
 //	getBookMsg(getStorageNow('imgUrl'),getStorageNow('bookName'),getStorageNow('author'),getStorageNow('classIs'),getStorageNow('from'),getStorageNow('msg'));
@@ -56,7 +56,12 @@ require.config({
 	})
 	
 	function getBookMsg(key){
-		var ref = new Wilddog("https://bookcity2017.wilddogio.com/books/"+key);
+		if(getStorageNow("bookType") == "sale"){
+			var ref = new Wilddog("https://bookcity2017.wilddogio.com/sale/"+key);
+		}
+		else{
+			var ref = new Wilddog("https://bookcity2017.wilddogio.com/books/"+key);
+		}
 		ref.on('value',function(snap){
 			var jsonStr = snap.val();
 			$("#bookImg").attr("src",jsonStr.imgUrl);
@@ -66,5 +71,21 @@ require.config({
 			$("#classIs").find('span').text(jsonStr.Class);
 			$(".bookIntroduce").text(jsonStr.msg);
 		})
+	}
+	
+	$('#read').on('tap',function(){
+		if(getStorageNow("bookType") == "sale"){
+			mui.alert("已复制好购买链接，可到浏览器粘贴打开");
+		}
+		else{
+			window.location.href = 'reader/reader.html';
+		}
+	});
+	
+	if(getStorageNow("bookType") == "sale"){
+		$("#read").text("购买");
+	}
+	else{
+		$("#read").text("阅读");
 	}
 });

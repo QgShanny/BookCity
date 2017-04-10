@@ -2,7 +2,7 @@ require.config({
 	paths: {
 		"jquery": "lib/jquery-1.9.1",
 		"mui": "lib/mui.min",
-		"reader": "reader",
+//		"reader": "reader",
 		"data": "data",
 		"localStorage": "localStorage"
 	},
@@ -10,12 +10,15 @@ require.config({
 		//no
 	}
 });
-define(['jquery', 'mui', 'reader', 'data','localStorage'], function() {
+define(['jquery', 'mui', 'data','localStorage'], function() {
 	var getStoreMsg = function(){
 		var ref = new Wilddog("https://bookcity2017.wilddogio.com/users/"+getStorageNow("storeKey"));
 		ref.on('value',function(snap){
 			var storeJson = snap.val();
 			console.log(storeJson);
+			if(storeJson.userHead!=null){
+				$(".userHead").attr("src",storeJson.userHead);
+			}
 			$(".storeName").text(storeJson.storeName);
 		    $(".storeDescription").text(storeJson. explain);
 		    $(".StoreName").text(storeJson.userName);
@@ -41,13 +44,14 @@ define(['jquery', 'mui', 'reader', 'data','localStorage'], function() {
 	$(function(){
 		$(document).on('tap','.readMore',function(){
 			var i = $(this).parent('.book').attr("num");
-			console.log(jsonStr[i]);
-			setStorage('imgUrl',jsonStr[i].imgUrl);
-			setStorage('bookName',jsonStr[i].bookName);
-			setStorage('author',jsonStr[i].author);
-			setStorage('classIs',jsonStr[i].Class);
-			setStorage('from',jsonStr[i].from);
-			setStorage('msg',jsonStr[i].msg);
+			setStorage("bookKey",i);
+			setStorage("bookType","sale");
+//			setStorage('imgUrl',jsonStr[i].imgUrl);
+//			setStorage('bookName',jsonStr[i].bookName);
+//			setStorage('author',jsonStr[i].author);
+//			setStorage('classIs',jsonStr[i].Class);
+//			setStorage('from',jsonStr[i].from);
+//			setStorage('msg',jsonStr[i].msg);
 			window.location.href = "bookDetail.html";
 		});
 	})

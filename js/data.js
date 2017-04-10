@@ -3,8 +3,8 @@ define(['jquery', 'localStorage'], function() {
 	var booksArr = [];
 
 	//书籍分类，男生，女生，科技。。。
-	var boyArr = [];
-	var girlArr = [];
+	var boyLen = 0;
+	var girlLen = 0;
 	//书籍的根地址
 	var ref = new Wilddog("https://bookcity2017.wilddogio.com/books");
 
@@ -13,20 +13,33 @@ define(['jquery', 'localStorage'], function() {
 		jsonStr = snapshot.val();
 		for(i in jsonStr) {
 			if(jsonStr[i].Class == "男生"){	
-				$("<li class='mui-table-view-cell'><a class='mui-navigate-right'>" + jsonStr[i].bookName + "</a></li>").appendTo($("#boyTui ul:nth-of-type(2)"));
+				$("<li key="+i+" class='mui-table-view-cell'><a class='mui-navigate-right'>" + jsonStr[i].bookName + "</a></li>").appendTo($("#boyTui ul:nth-of-type(2)"));
+				boyLen ++;
 			}
 			if(jsonStr[i].Class == "女生"){		
 				$("<li key="+i+" class='mui-table-view-cell'><a class='mui-navigate-right'>" + jsonStr[i].bookName + "</a></li>").appendTo($("#girlTui ul:nth-of-type(2)"));		
+				girlLen ++;
 			}
 		}
 
-		
+		//男生分区点击书籍进入书籍详情
+		for(var i = 0; i < boyLen; i++) {
+			(function() {
+				var p = i + 1;
+				$(document).on('tap', '#boyTui ul:nth-of-type(2) li:nth-of-type(' + p + ')', function() {
+					setStorage('bookKey', $(this).attr("key"));
+					setStorage("bookType","book");
+					window.location.href = "bookDetail.html";
+				});
+			})()
+		}		
 		//女生分区点击书籍进入书籍详情
-		for(var i = 0; i < 2; i++) {
+		for(var i = 0; i < girlLen; i++) {
 			(function() {
 				var p = i + 1;
 				$(document).on('tap', '#girlTui ul:nth-of-type(2) li:nth-of-type(' + p + ')', function() {
 					setStorage('bookKey', $(this).attr("key"));
+					setStorage("bookType","book");
 					window.location.href = "bookDetail.html";
 				});
 			})()
@@ -52,7 +65,7 @@ define(['jquery', 'localStorage'], function() {
 			if(jsonStr[i].sureSeller == 1){
 				store += '<div class="store" storeID = '+jsonStr[i].key + '>'
 						+ '<img class="storeImg" src="../img/index1.jpg"/><h5>' + jsonStr[i].storeName 
-						+ '</h5><p>'+jsonStr[i].explain+'</p><i class="mui-icon mui-icon-search collectStore"></i>' 
+						+ '</h5><p>'+jsonStr[i].explain+'</p><i class="collectStore iconfont icon-heart" style="font-size:27px;"></i>' 
 						+ '</div><div class="clearfix"></div>';
 			}
 			$("#showSale").html(store);
@@ -84,6 +97,12 @@ define(['jquery', 'localStorage'], function() {
 		//登录后显示积分到侧边栏
 		var scoreObj = getStorageNow("score");
 		$("#score").text(scoreObj);
+		var ref = new Wilddog("https://bookcity2017.wilddogio.com/users/"+getStorageNow("userKey")+"/userHead");
+		ref.on('value',function(sanp){
+			var imgdata = sanp.val();
+			if(ImageData!=null)
+				$("#userHead img").attr("src",imgdata);
+		})
 	}
 
 	//签到

@@ -133,3 +133,25 @@ ul.msg li #bookHot div canvas {
 ul.msg li #container div {
   margin-top: 10px !important;
 }
+.allBooksList li {
+  margin-bottom: 20px;
+}
+.allBooksList li img {
+  float: left;
+  margin-left: 20px;
+  width: 80px;
+  height: 100px;
+  border-radius: 10px;
+}
+.allBooksList li div {
+  float: left;
+  margin-left: 20px;
+}
+.allBooksList li div h5 {
+  margin-top: 20px;
+  font-size: 16px;
+  color: black;
+}
+.allBooksList li div p:nth-of-type(1) {
+  margin-bottom: 0;
+}

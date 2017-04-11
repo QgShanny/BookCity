@@ -63,8 +63,14 @@ define(['jquery', 'localStorage'], function() {
 		var jsonStr = snapshot.val();
 		for(i in jsonStr) {
 			if(jsonStr[i].sureSeller == 1){
+				if(jsonStr[i].userHead!=null){
+					var userHead = jsonStr[i].userHead;
+				}
+				else{
+					var userHead = "../img/logo.jpg";
+				}
 				store += '<div class="store" storeID = '+jsonStr[i].key + '>'
-						+ '<img class="storeImg" src="../img/index1.jpg"/><h5>' + jsonStr[i].storeName 
+						+ '<img class="storeImg" src="'+userHead+'"/><h5>' + jsonStr[i].storeName 
 						+ '</h5><p>'+jsonStr[i].explain+'</p><i class="collectStore iconfont icon-heart" style="font-size:27px;"></i>' 
 						+ '</div><div class="clearfix"></div>';
 			}

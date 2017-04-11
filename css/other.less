@@ -41,18 +41,18 @@
         margin-left: 15px;
         width: 120px;
     }
-        i {
-            position: absolute;
-                right: 27px;
-    top: 10px;
-    font-size: 25px;
-        }
-    button{
-            position: absolute;
-    top: 90px;
-    right: 20px;
-    color: @Color !important;
-    border: @Color solid 1px;
+    i {
+        position: absolute;
+        right: 27px;
+        top: 10px;
+        font-size: 25px;
+    }
+    button {
+        position: absolute;
+        top: 90px;
+        right: 20px;
+        color: @Color !important;
+        border: @Color solid 1px;
     }
     div {
         margin-left: 20px;
@@ -72,40 +72,40 @@
         }
     }
 }
-#bookClass,#allCollect{
+#bookClass,
+#allCollect {
     width: 90%;
     margin-left: 5%;
     border-bottom: solid 1px rgba(35, 163, 213, 0.41);
     height: 25px;
-    li{
+    li {
         width: 50%;
         text-align: center;
         height: 25px;
     }
-    li:first-of-type{
+    li:first-of-type {
         border-bottom: solid 2px @Color;
     }
 }
-.bookIntroduce{
+.bookIntroduce {
     width: 90%;
     margin-left: 5%;
-
 }
-.bookChapter{
+.bookChapter {
     background-color: @backColor;
     width: 90%;
     margin-left: 5%;
     display: none;
-    li{
+    li {
         float: none;
         display: block;
     }
 }
-.bookChapter:before{
+.bookChapter:before {
     background-color: @backColor;
 }
-
-#userUpdate,#bookUpdate{
+#userUpdate,
+#bookUpdate {
     position: absolute;
     width: 100%;
     background: rgba(0, 0, 0, 0.35);
@@ -114,38 +114,60 @@
     min-height: 100%;
     padding-top: 20%;
     display: none;
-    .mui-input-group{
+    .mui-input-group {
         margin-left: 10px;
         margin-right: 10px;
         border-radius: 5px;
     }
 }
-
-
 //版本信息的样式
-.container{
+.container {
     margin-top: 50px;
 }
-
-ul.msg{
-    li{
+ul.msg {
+    li {
         float: none;
         display: block;
-        .version{
+        .version {
             color: gray;
             text-align: center;
         }
-        #bookHot{
-            div{
-                canvas{
-                    left: -45px !important;  
+        #bookHot {
+            div {
+                canvas {
+                    left: -45px !important;
                 }
             }
         }
-        #container{
-            div{
+        #container {
+            div {
                 margin-top: 10px !important;
-                }
+            }
+        }
+    }
+}
+//全部书籍列表
+.allBooksList {
+    li {
+        margin-bottom: 20px;
+        img {
+            float: left;
+            margin-left: 20px;
+            width: 80px;
+            height: 100px;
+            border-radius: 10px;
+        }
+        div {
+            float: left;
+            margin-left: 20px;
+            h5 {
+                margin-top: 20px;
+                font-size: 16px;
+                color: black;
+            }
+            p:nth-of-type(1){
+                margin-bottom: 0;
+            }
         }
     }
 }

@@ -151,5 +151,8 @@ define(['jquery', 'localStorage'], function() {
 		window.location.href = 'msg.html';
 	});
 	
-
+// 女生频道
+	$("#girlAll").on('tap',function(){
+		window.location.href = 'allBook.html';
+	})
 })

@@ -38,7 +38,7 @@ define(['jquery', 'mui', 'localStorage'], function() {
 					console.log(i);									//该用户对应的key
 					setStorage("userId", jsonStr[i].phone);
 					setStorage("userName", jsonStr[i].userName);
-					setStorage("score", jsonStr[i].score);
+					setStorage("score", jsonStr[i].Score);
 					setStorage("manager", jsonStr[i].manager);
 //					setStorage("userKey", jsonStr[i].key);
 					setStorage("sureSeller", jsonStr[i].sureSeller);

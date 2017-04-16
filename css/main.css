@@ -72,6 +72,7 @@
 .indexShow:nth-child(1) #nothing {
   margin-top: 80px;
   text-align: center;
+  display: none;
 }
 .indexShow:nth-child(1) #nothing ul li {
   display: inline-block;
@@ -291,8 +292,7 @@
 .bookCityDetail #jingdian1 h4,
 .bookCityDetail #jingdian2 h4,
 .bookCityDetail #jingdian3 h4 {
-  margin: 0;
-  margin-top: 5px;
+  margin: 5px 0 0;
 }
 .bookCityDetail #weekTui .h4befor,
 .bookCityDetail #myTui .h4befor,
@@ -688,7 +688,7 @@
 .bookCityDetail #paihang2 ul li:first-of-type button,
 .bookCityDetail #paihang3 ul li:first-of-type button {
   top: 30%;
-  right: 0%;
+  right: 0;
   color: #23a3d5;
   border: solid #23a3d5 1px;
   background-color: #eff3f5;
@@ -780,6 +780,33 @@
   left: -2px;
   color: #23a3d5;
 }
+#searchResult {
+  margin-top: 20px;
+  margin-left: 70px;
+  color: gray;
+}
+#searchResult li {
+  display: block;
+  float: none;
+  margin-bottom: 5px;
+}
+#bookShelf ul li {
+  text-align: center;
+  width: calc(25%);
+  margin-bottom: 5px;
+}
+#bookShelf ul li img {
+  height: 90px;
+}
+#bookShelf ul span {
+  display: block;
+  height: 7px;
+  background: #23a3d5;
+  clear: both;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
 #select {
   width: 100%;
   height: 100%;
@@ -864,6 +891,9 @@
   right: 27px;
   top: 10px;
   font-size: 25px;
+}
+.bookMsg i.icon-dashang {
+  right: 60px;
 }
 .bookMsg button {
   position: absolute;
@@ -1204,6 +1234,10 @@ body#readerBody #catalog ul.chapter {
 .backManager li.mui-table-view-cell {
   display: block;
   float: none;
+}
+.backManager:before,
+.backManager:after {
+  background-color: white;
 }
 table tr,
 table td {

@@ -6,6 +6,10 @@
   display: block;
   float: none;
 }
+.backManager:before,
+.backManager:after {
+  background-color: white;
+}
 table tr,
 table td {
   border: solid #23a3d5 1px;

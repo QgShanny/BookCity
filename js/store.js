@@ -15,7 +15,6 @@ define(['jquery', 'mui', 'data','localStorage'], function() {
 		var ref = new Wilddog("https://bookcity2017.wilddogio.com/users/"+getStorageNow("storeKey"));
 		ref.on('value',function(snap){
 			var storeJson = snap.val();
-			console.log(storeJson);
 			if(storeJson.userHead!=null){
 				$(".userHead").attr("src",storeJson.userHead);
 			}
@@ -28,11 +27,11 @@ define(['jquery', 'mui', 'data','localStorage'], function() {
 	var jsonStr;
 	var bookList = "";
 	var ref = new Wilddog("https://bookcity2017.wilddogio.com/sale");
-	ref.on('value',function(snapshot){
+	ref.once('value',function(snapshot){;
 		jsonStr = snapshot.val();
 		for(i in jsonStr){
-			if(jsonStr[i].saler == getStorageNow("storeKey")){
-				return;
+			if(jsonStr[i].saler != getStorageNow("storeKey")){
+				continue;
 			}
 			bookList += '<a class="book" num='+i+'><img src="'+jsonStr[i].imgUrl+'"/><p class="bookName">'+jsonStr[i].bookName+'</p><p class="price">'+jsonStr[i].price+'</p>'
 			  + '<p class="upTime">上线时间：<span></span></p><button type="button" class="mui-btn mui-btn-primary mui-btn-outlined readMore" bookKey="'+jsonStr[i].key+'">了解详情</button></a>'

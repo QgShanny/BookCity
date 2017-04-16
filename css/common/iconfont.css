@@ -1,5 +1,6 @@
+
 @font-face {font-family: "iconfont";
-  src: url('../../fonts/iconfont.ttf') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  src:url('../../fonts/iconfont.ttf?t=1492260277349') format('truetype');
 }
 
 .iconfont {
@@ -33,9 +34,13 @@
 
 .icon-ziliao:before { content: "\e613"; }
 
+.icon-dashang:before { content: "\e6fb"; }
+
 .icon-heart:before { content: "\e62f"; }
 
 .icon-books:before { content: "\e72c"; }
+
+.icon-aixin:before { content: "\e697"; }
 
 .icon-nvsheng1:before { content: "\e601"; }
 

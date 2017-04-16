@@ -4,7 +4,8 @@ require.config({
 		"mui": "lib/mui.min",
 		"localStorage": "localStorage",
 		"base": "base",
-		"data": "data"
+		"data": "data",
+		"index": "index"
 	},
 	shim: {
 		//no
@@ -16,7 +17,8 @@ define([
 	'mui',
 	'localStorage',
 	'base',
-	'data'
+	'data',
+	'index'
 ], function() {
 	//页面的滚动
 	mui.init()
@@ -25,5 +27,4 @@ define([
 			deceleration: 0.0005
 		});
 	});
-
 })

@@ -54,11 +54,11 @@ define([
 				var bookJson = snap.val();
 				var bookList = '<li collectKey="' + i + '" class="mui-table-view-cell">' +
 					'<div class="mui-slider-left mui-disabled">' +
-					'<a class="mui-btn mui-btn-grey mui-icon mui-icon mui-icon-more" msg='+bookJson.msg+'></a>' +
+					'<a class="mui-btn mui-btn-grey mui-icon mui-icon mui-icon-more" msg=' + bookJson.msg + '></a>' +
 					'<a class="mui-btn mui-btn-red mui-icon mui-icon mui-icon-trash"></a>' +
 					'</div>' +
 					'<div class="mui-slider-right mui-disabled">' +
-					'<a class="mui-btn mui-btn-grey mui-icon mui-icon mui-icon-more" msg='+bookJson.msg+'></a>' +
+					'<a class="mui-btn mui-btn-grey mui-icon mui-icon mui-icon-more" msg=' + bookJson.msg + '></a>' +
 					'<a class="mui-btn mui-btn-red mui-icon mui-icon mui-icon-trash"></a></div>' +
 					'<div class="mui-slider-handle">' + bookJson.bookName + '</div>' +
 					'</li>';
@@ -66,9 +66,9 @@ define([
 			})
 		}
 	});
-	
-		$(document).on('tap', '.bookCollect .mui-icon-more', function() {
-			mui.alert($(this).attr("msg"));
+
+	$(document).on('tap', '.bookCollect .mui-icon-more', function() {
+		mui.alert($(this).attr("msg"));
 	});
 
 	$(document).on('tap', '.bookCollect .mui-icon-trash', function() {
@@ -82,13 +82,11 @@ define([
 		})
 
 	});
-	
-	
+
 	var refCollectStore = new Wilddog("https://bookcity2017.wilddogio.com/users/" + getStorageNow("userKey") + "/collectionStore");
 	refCollectStore.on('value', function(snap) {
 		$(".storeCollect .mui-table-view-cell").remove();
 		var jsonStr = snap.val(); //收藏的书店
-		console.log(jsonStr);
 		for(i in jsonStr) {
 			var storeKey = jsonStr[i].storeKey;
 			var store = new Wilddog("https://bookcity2017.wilddogio.com/users/" + storeKey);
@@ -96,11 +94,11 @@ define([
 				var storeJson = snap.val();
 				var storeList = '<li collectKey="' + i + '" class="mui-table-view-cell">' +
 					'<div class="mui-slider-left mui-disabled">' +
-					'<a class="mui-btn mui-btn-grey mui-icon mui-icon mui-icon-more" storeExplain='+storeJson.explain+'></a>' +
+					'<a class="mui-btn mui-btn-grey mui-icon mui-icon mui-icon-more" storeExplain=' + storeJson.explain + '></a>' +
 					'<a class="mui-btn mui-btn-red mui-icon mui-icon mui-icon-trash"></a>' +
 					'</div>' +
 					'<div class="mui-slider-right mui-disabled">' +
-					'<a class="mui-btn mui-btn-grey mui-icon mui-icon mui-icon-more" storeExplain='+storeJson.explain+'></a>' +
+					'<a class="mui-btn mui-btn-grey mui-icon mui-icon mui-icon-more" storeExplain=' + storeJson.explain + '></a>' +
 					'<a class="mui-btn mui-btn-red mui-icon mui-icon mui-icon-trash"></a></div>' +
 					'<div class="mui-slider-handle">' + storeJson.storeName + '</div>' +
 					'</li>';
@@ -110,9 +108,9 @@ define([
 	});
 
 	$(document).on('tap', '.storeCollect .mui-icon-more', function() {
-			mui.alert($(this).attr("storeExplain"));
+		mui.alert($(this).attr("storeExplain"));
 	});
-		$(document).on('tap', '.storeCollect .mui-icon-trash', function() {
+	$(document).on('tap', '.storeCollect .mui-icon-trash', function() {
 		var removeKey = $(this).parent().parent().attr("collectKey");
 		mui.confirm('确认要删除这家店吗？', '', btnArray, function(e) {
 			if(e.index == 1) {
@@ -133,7 +131,7 @@ define([
 		$("#sex").text(jsonStr.sex);
 		$("#email").text(jsonStr.email);
 
-		if(jsonStr.userHead == null) {
+		if(getStorageNow("userHead") == null) {
 			var sex = jsonStr.sex;
 			if(sex == "女") {
 				$("#picture img").attr("src", "../../img/girl.jpg");
@@ -141,7 +139,7 @@ define([
 				$("#picture img").attr("src", "../../img/boy.jpg");
 			}
 		} else {
-			$("#picture img").attr("src", jsonStr.userHead);
+			$("#picture img").attr("src", getStorageNow("userHead"));
 		}
 
 		if(jsonStr.seller == 0 && jsonStr.sureSeller == null) {
@@ -296,11 +294,11 @@ define([
 		imgFile.onload = function() {
 			var imgData = this.result; //base64数据    
 			$("#picture img").attr('src', imgData);
-			var ref = new Wilddog("https://bookcity2017.wilddogio.com/users/"+getStorageNow("userKey"));
+			var ref = new Wilddog("https://bookcity2017.wilddogio.com/users/" + getStorageNow("userKey"));
 			ref.update({
-				userHead : imgData
+				userHead: imgData
 			});
-			console.log("图片长度为："+imgData.length);
+			console.log("图片长度为：" + imgData.length);
 		}
 		$("#userPic").val();
 	}
@@ -317,7 +315,6 @@ define([
 			var options = JSON.parse(optionsJson);
 			var picker = new $.DtPicker(options);
 			picker.show(function(rs) {
-				console.log(rs.text);
 				$("#birthDay").innerTexttext = rs.text;
 				ref.update({
 					birthDay: rs.text
@@ -373,9 +370,10 @@ define([
 
 	})(mui, document);
 
+
+
 	$(".back").on('tap', function() {
 		window.location.href = "../index.html";
 	});
-	
-	
+
 })

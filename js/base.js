@@ -154,5 +154,11 @@ define(['jquery', 'localStorage'], function() {
 // 女生频道
 	$("#girlAll").on('tap',function(){
 		window.location.href = 'allBook.html';
-	})
+	});
+	
+//	我的书架
+	$("#mybookShelf").on('tap',function(){
+		mui.alert("你还没有书哦，快到书城去挑选吧！")
+	});
+
 })

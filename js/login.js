@@ -13,14 +13,25 @@ define(['jquery', 'mui', 'localStorage'], function() {
 
 	var jsonStr; //用户的json数据
 	var ref = new Wilddog("https://bookcity2017.wilddogio.com/users");
-	var usersArr = [];
 	//on 有变化就读取
+//	$("#login").on('tap', function() {
+//		var phone = $.trim($("#phone").val());
+//		var password = $.trim($("#password").val());
+//		if(phone.length == 0 || password.length == 0) {
+//			mui.alert("请输入正确的用户名和密码");
+//			return;
+//		}
+//		console.log("开始比对数据");
+//		ref.on("value", function(snapshot) {
+//			jsonStr = snapshot.val();
+//			console.log("用户信息爬取完成");
+//		});
+//	});
+	
 	ref.on("value", function(snapshot) {
 		var jsonStr = snapshot.val();
-				for(i in jsonStr) {
-					usersArr.push(jsonStr[i]);
-				}
-		$("#login").click(function() {
+		console.log("用户信息爬取完成");
+		$("#login").on('tap', function() {
 			var phone = $.trim($("#phone").val());
 			var password = $.trim($("#password").val());
 			if(phone.length == 0 || password.length == 0) {
@@ -34,18 +45,29 @@ define(['jquery', 'mui', 'localStorage'], function() {
 						window.location.href = "index.html";
 					});
 					status = 1;
-					setStorage("userKey",i);
-					console.log(i);									//该用户对应的key
-					setStorage("userId", jsonStr[i].phone);
+					setStorage("userKey", i);
+					console.log("用户" + i + "登录成功");
+					var imgdata = jsonStr[i].userHead;
+					if(ImageData != null) {
+						setStorage("userHead", imgdata);
+					}
 					setStorage("userName", jsonStr[i].userName);
-					setStorage("score", jsonStr[i].Score);
+					setStorage("score", jsonStr[i].score);
 					setStorage("manager", jsonStr[i].manager);
-//					setStorage("userKey", jsonStr[i].key);
 					setStorage("sureSeller", jsonStr[i].sureSeller);
-					console.log(jsonStr[i].phone + "  " + jsonStr[i].password);
+					var read = new Wilddog("https://bookcity2017.wilddogio.com/users/" + i + "/buyBooks");
+					var count = 0;
+					read.on('value', function(snap) {
+						var readNum = snap.val();
+						for(i in readNum) {
+							count++;
+						}
+						console.log(count);
+						setStorage("readNum", count);
+					});
 					break;
 				}
-			}			
+			}
 			if(status == 0) {
 				mui.alert("用户名或密码错误");
 			}
@@ -53,44 +75,6 @@ define(['jquery', 'mui', 'localStorage'], function() {
 
 	});
 
-	/*
-		$("#login").click(function() {
-			var phone = $.trim($("#phone").val());
-			var password = $.trim($("#password").val());
-			if(phone.length == 0 || password.length == 0) {
-				mui.alert("请输入正确的用户名和密码");
-				return;
-			}
-			var status = 0;
-			console.log(jsonStr);
-			for(i in jsonStr){
-				console.log("j:"+jsonStr[i]);
-			}
-			for(i in usersArr) {
-				console.log("u:"+usersArr[i]);
-			}
-			for(i in usersArr) {
-				console.log(usersArr[i].phone + "  " + usersArr[i].password);
-				if(phone == usersArr[i].phone && password == usersArr[i].password) {
-					mui.alert(usersArr[i].userName + " 登录成功", function() {
-						window.location.href = "index.html";
-					});
-					status = 1;
-					setStorage("userId", usersArr[i].phone);
-					setStorage("userName", usersArr[i].userName);
-					setStorage("score", usersArr[i].score);
-					setStorage("manager", usersArr[i].manager);
-					setStorage("userKey", usersArr[i].key);
-					setStorage("sureSeller", usersArr[i].sureSeller);
-					temp = i;
-					break;
-				}
-			}
-			if(status == 0) {
-				mui.alert("用户名或密码错误");
-			}
-		});
-	*/
 	$("#cancle").click(function() {
 		window.location.href = "index.html";
 	});

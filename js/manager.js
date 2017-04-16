@@ -11,39 +11,40 @@ require.config({
 });
 define(['jquery', 'mui', 'data'], function() {
 
+	var btnArray = ['取消', '确认'];
+
 	function gitBookMsg() {
-		var manageFlag = getStorageNow("manager");
-		if(manageFlag == 1) {
-			var ref = new Wilddog("https://bookcity2017.wilddogio.com/books");
-		} else {
+		var type = getStorageNow("bookSale"); //type为0表示是从商家处添加书籍
+		if(type == 1) {
 			var ref = new Wilddog("https://bookcity2017.wilddogio.com/sale");
+		} else {
+			var ref = new Wilddog("https://bookcity2017.wilddogio.com/books");
 		}
-		var bookid = $("#bookID").val();
 		var bookname = $("#bookName").val();
 		var author = $("#author").val();
 		var from = $("#from").val();
 		var classIs = $("#classIs").val();
 		var msg = $("#Msg").val();
 		var imgUrl = $("#imgUrl").val();
+		var buyUrl = $("#buyUrl").val();
 
-		if($.trim(bookid).length == 0 ||
-			$.trim(bookname).length == 0 ||
+		if($.trim(bookname).length == 0 ||
 			$.trim(author).length == 0 ||
 			$.trim(from).length == 0 ||
 			$.trim(classIs).length == 0 ||
 			$.trim(msg).length == 0 ||
-			$.trim(imgUrl).length == 0) {
+			$.trim(imgUrl).length == 0 ||
+			$.trim(buyUrl).length == 0) {
 			mui.alert("您还有未输入的信息");
 			return;
 		}
-		if(manageFlag == 0) {
+		if(type == 1) {
 			if($.trim($("#price").val()) == 0) {
 				mui.alert("您还有未输入的信息");
 				return;
 			}
 		}
 		var newref = ref.push({
-			"bookId": bookid,
 			"bookName": bookname,
 			"author": author,
 			"from": from,
@@ -53,26 +54,20 @@ define(['jquery', 'mui', 'data'], function() {
 		});
 
 		var postID = newref.key();
-		if(manageFlag == 0) {
+		if(type == 1) {
+			var now = new Date();
+			var year = now.getFullYear(); //年  
+			var month = now.getMonth() + 1; //月  
+			var day = now.getDate(); //日  
+			var time = year + "年" + month + "月" + day + "日";
 			var ref = new Wilddog("https://bookcity2017.wilddogio.com/sale/" + postID);
 			ref.update({
-				"price": $.trim($("#price").val())
+				"price": $.trim($("#price").val()),
+				"buyUrl": $.trim($("#buyUrl").val()),
+				"saler": getStorageNow("userKey"),
+				"updateTime": time
 			});
 		}
-		mui.alert("插入成功", function() {
-			if(manageFlag == 1) {
-				var ref = new Wilddog("https://bookcity2017.wilddogio.com/books/" + postID);
-				console.log("管理员");
-			} else {
-				var ref = new Wilddog("https://bookcity2017.wilddogio.com/sale/" + postID);
-				console.log("卖家" + postID);
-			}
-
-			ref.update({
-				"key": postID
-			});
-		});
-
 	}
 
 	// 书籍查询
@@ -81,17 +76,18 @@ define(['jquery', 'mui', 'data'], function() {
 	refBook.on("value", function(snapshot) {
 		$(".bookItem").remove();
 		var jsonStr = snapshot.val();
-		console.log("所有书籍" + jsonStr);
 		var booksArr = [];
 		var bookList = "";
 		for(i in jsonStr) {
 			booksArr.push(jsonStr[i]);
 		}
-
+		var temp = 1;
 		for(i in booksArr) {
-			bookList += "<tr class='bookItem'><td>" + booksArr[i].bookId + "</td><td>" + booksArr[i].bookName + "</td><td>" + booksArr[i].author + "</td><td><i class='mui-icon mui-icon-trash' key='" + booksArr[i].key + "'></i><i class='mui-icon mui-icon-compose' key='" + booksArr[i].key + "'></i></td></tr>";
+			bookList += "<tr class='bookItem'><td>" + temp + "</td><td>" + booksArr[i].bookName + "</td><td>" + booksArr[i].author + "</td><td><i class='mui-icon mui-icon-trash' key='" + booksArr[i].key + "'></i><i class='mui-icon mui-icon-compose' key='" + booksArr[i].key + "'></i></td></tr>";
+			temp++;
 		}
 		$(bookList).appendTo($("#allBookList"));
+		console.log("全部书籍已展示")
 	});
 
 	// 用户查询
@@ -100,12 +96,10 @@ define(['jquery', 'mui', 'data'], function() {
 	refUser.on("value", function(snapshot) {
 		$(".userItem").remove();
 		var jsonStr = snapshot.val();
-		var usersArr = [];
 		var userList = "";
-		for(i in jsonStr) {
-			usersArr.push(jsonStr[i]);
-		}
-
+		var salerList = "";
+		var temp = 1;
+		var temp2 = 1;
 		for(i in jsonStr) {
 			if(jsonStr[i].manager == 1) {
 				var identity = "管理员";
@@ -119,28 +113,16 @@ define(['jquery', 'mui', 'data'], function() {
 			if(jsonStr[i].sureSeller == 1) {
 				var identity = "商家";
 			}
-			console.log(jsonStr[i].manager + "  " + identity);
-			userList += "<tr class='userItem'><td>" + jsonStr[i].userName + "</td><td>" + jsonStr[i].sex + "</td><td>" + jsonStr[i].phone + "</td><td>" + identity + "</td><td><i class='mui-icon mui-icon-trash' key='" + i + "'></i><i class='mui-icon mui-icon-compose' key='" + i + "'></i></td></tr>";
+			userList += "<tr class='userItem'><td>" + temp + "</td><td>" + jsonStr[i].userName + "</td><td>" + jsonStr[i].sex + "</td><td>" + jsonStr[i].phone + "</td><td>" + identity + "</td><td><i class='mui-icon mui-icon-trash' key='" + i + "'></i><i class='mui-icon mui-icon-compose' key='" + i + "'></i></td></tr>";
+			temp++;
+			if(jsonStr[i].sureSeller == 1) {
+				salerList += "<tr class='salerItem'><td>" + temp2 + "</td><td>" + jsonStr[i].userName + "</td><td>" + jsonStr[i].storeName + "</td><td class='manager' key=" + i + " style='color:#23a3d5;'>进入管理</td></tr>";
+				temp2++;
+			}
 		}
 		$(userList).appendTo($("#allUserList"));
-	});
-
-	// 卖家书籍查询
-	var saleBook = new Wilddog("https://bookcity2017.wilddogio.com/sale");
-	//once 只读取一次
-	saleBook.on("value", function(snapshot) {
-		$(".saleItem").remove();
-		var jsonStr = snapshot.val();
-		var booksArr = [];
-		var bookList = "";
-		for(i in jsonStr) {
-			booksArr.push(jsonStr[i]);
-		}
-
-		for(i in booksArr) {
-			bookList += "<tr class='saleItem'><td>" + booksArr[i].bookId + "</td><td>" + booksArr[i].bookName + "</td><td>" + booksArr[i].author + "</td><td>￥" + booksArr[i].price + "</td><td><i class='mui-icon mui-icon-trash' key='" + booksArr[i].key + "'></i><i class='mui-icon mui-icon-compose' key='" + booksArr[i].key + "'></i></td></tr>";
-		}
-		$(bookList).appendTo($("#allSaleBookList"));
+		$(salerList).appendTo($("#allSaler"));
+		console.log("全部用户和商家已展示")
 	});
 
 	// 意见查询
@@ -150,28 +132,77 @@ define(['jquery', 'mui', 'data'], function() {
 		$(".sugItem").remove();
 		var jsonStr = snapshot.val();
 		var sugList = "";
-		var sugsArr = [];
-		var sugList = "";
 		for(i in jsonStr) {
-			sugsArr.push(jsonStr[i]);
-		}
-
-		for(i in sugsArr) {
-			sugList += "<tr class='sugItem'><td>" + sugsArr[i].userName + "</td><td>" + sugsArr[i].content + "</td><td>" + sugsArr[i].time + "</td><td><i class='mui-icon mui-icon-trash' key='" + sugsArr[i].key + "'></i></td></tr>";
+			sugList += "<tr class='sugItem'><td>" + jsonStr[i].userName + "</td><td>" + jsonStr[i].content + "</td><td>" + jsonStr[i].time + "</td><td><i class='mui-icon mui-icon-trash' key='" + jsonStr[i].key + "'></i><i class='mui-icon mui-icon-search' key='" + jsonStr[i].key + "'></i></td></tr>";
 		}
 		$(sugList).appendTo($("#allsugList"));
+		console.log("全部意见已展示")
 	});
 
+	// 卖家书籍查询
+	var saleMsgShow = function(saleKey) {
+		var saleMsg = new Wilddog("https://bookcity2017.wilddogio.com/users/" + saleKey);
+		saleMsg.on("value", function(snap) {
+			var jsonstr = snap.val();
+			$("#storeName").text(jsonstr.storeName);
+			$("#storeExplain").text(jsonstr.explain);
+		});
+		$("#storeName").on('tap', function() {
+			mui.prompt('请输入你新的店名：', '', '', btnArray, function(e) {
+				if(e.index == 1) {
+					if($.trim(e.value).length > 0) {
+						saleMsg.update({
+							storeName: e.value
+						});
+					}
+				}
+			});
+		});
+		$("#storeExplain").on('tap', function() {
+			mui.prompt('请输入你新的店描述：', '', '', btnArray, function(e) {
+				if(e.index == 1) {
+					if($.trim(e.value).length > 0) {
+						saleMsg.update({
+							explain: e.value
+						});
+					}
+				}
+			});
+		});
+		var saleBook = new Wilddog("https://bookcity2017.wilddogio.com/sale");
+		//once 只读取一次
+		saleBook.on("value", function(snapshot) {
+			$(".saleItem").remove();
+			var jsonStr = snapshot.val();
+			var bookList = "";
+			var temp = 1;
+			for(i in jsonStr) {
+				if(jsonStr[i].saler != saleKey) {
+					continue;
+				}
+				bookList += "<tr class='saleItem'><td>" + temp + "</td><td>" + jsonStr[i].bookName + "</td><td>" + jsonStr[i].author + "</td><td>￥" + jsonStr[i].price + "</td><td><i class='mui-icon mui-icon-trash' key='" + i + "'></i><i class='mui-icon mui-icon-compose' key='" + i + "'></i></td></tr>";
+				temp++;
+			}
+			$(bookList).appendTo($("#allSaleBookList"));
+		});
+	}
+	if(getStorageNow('Entrance') == 'saler') {
+		var saleKey = getStorageNow("userKey");
+		setStorage('salerKey', saleKey);
+	}	
+	saleMsgShow(getStorageNow('salerKey'));
 	$("#addBook").on('tap', function() {
-		var signFlag = sign('userId');
-		console.log(signFlag);
+		var signFlag = sign('userKey');
 		if(signFlag == 1) {
+			if($(this).attr("booktype") == 'saler') {
+				setStorage("bookSale", "1");
+			}
 			window.location.href = "addBook.html";
 		}
 	});
 
 	$("#addUser").on('tap', function() {
-		var signFlag = sign('userId');
+		var signFlag = sign('userKey');
 		if(signFlag == 1) {
 			window.location.href = "../regist.html";
 		}
@@ -182,14 +213,14 @@ define(['jquery', 'mui', 'data'], function() {
 		$(document).on('tap', '.bookItem .mui-icon-trash', function() {
 			var postID = $(this).attr("key");
 			var ref = new Wilddog("https://bookcity2017.wilddogio.com/books");
-			console.log(postID);
 			var btnArray = ['取消', '确认'];
 			mui.confirm('确认要删除这本书吗？', '', btnArray, function(e) {
-				//					回调方法内容
+				//回调方法内容
 				if(e.index == 1) {
 					ref.child(postID).remove();
+					console.log("书籍" + postID + "删除成功");
 				}
-			})
+			});
 		});
 		//	编辑书籍
 		$(document).on('tap', '.bookItem .mui-icon-compose', function() {
@@ -197,7 +228,6 @@ define(['jquery', 'mui', 'data'], function() {
 			console.log(postID);
 			var ref = new Wilddog("https://bookcity2017.wilddogio.com/books/" + postID);
 			ref.on('value', function(snapshot) {
-				$("#bookID").val(snapshot.val().bookId);
 				$("#bookName").val(snapshot.val().bookName);
 				$("#author").val(snapshot.val().author);
 				$("#from").val(snapshot.val().from);
@@ -207,8 +237,6 @@ define(['jquery', 'mui', 'data'], function() {
 				$("#bookUpdate").fadeIn('fast');
 			});
 			$("#gitMsg").on('tap', function() {
-
-				var bookid = $("#bookID").val();
 				var bookname = $("#bookName").val();
 				var author = $("#author").val();
 				var from = $("#from").val();
@@ -216,8 +244,7 @@ define(['jquery', 'mui', 'data'], function() {
 				var msg = $("#msg").val();
 				var imgUrl = $("#imgUrl").val();
 
-				if($.trim(bookid).length == 0 ||
-					$.trim(bookname).length == 0 ||
+				if($.trim(bookname).length == 0 ||
 					$.trim(author).length == 0 ||
 					$.trim(from).length == 0 ||
 					$.trim(classIs).length == 0 ||
@@ -228,7 +255,6 @@ define(['jquery', 'mui', 'data'], function() {
 				}
 
 				ref.update({
-					"bookId": bookid,
 					"bookName": bookname,
 					"author": author,
 					"from": from,
@@ -244,15 +270,14 @@ define(['jquery', 'mui', 'data'], function() {
 		//	删除用户
 		$(document).on('tap', '.userItem .mui-icon-trash', function() {
 			var postID = $(this).attr("key");
-			console.log(postID);
 			var ref = new Wilddog("https://bookcity2017.wilddogio.com/users");
-			var btnArray = ['取消', '确认'];
 			mui.confirm('确认要删除该用户吗？', '', btnArray, function(e) {
 				//					回调方法内容
 				if(e.index == 1) {
 					ref.child(postID).remove();
+					console.log("用户" + postID + "删除成功");
 				}
-			})
+			});
 		});
 		//	编辑用户
 		$(document).on('tap', '.userItem .mui-icon-compose', function() {
@@ -348,12 +373,37 @@ define(['jquery', 'mui', 'data'], function() {
 				});
 			});
 		});
+		//  编辑商家
+		$(document).on('tap', '.salerItem .manager', function() {
+			var salerKey = $(this).attr("key");
+			setStorage("salerKey", salerKey);			
+			setStorage('Entrance','manager');
+			window.location.href = 'salerManager.html';
+		});
+		//	删除建议
+		$(document).on('tap', '.sugItem .mui-icon-trash', function() {
+			var postID = $(this).attr("key");
+			var ref = new Wilddog("https://bookcity2017.wilddogio.com/suggests");
+			mui.confirm('确认要删除该意见吗？', '', btnArray, function(e) {
+				//					回调方法内容
+				if(e.index == 1) {
+					ref.child(postID).remove();
+					console.log("意见" + postID + "删除成功");
+				}
+			});
+		});
+		//	查看建议
+		$(document).on('tap', '.sugItem .mui-icon-search', function() {
+			var postID = $(this).attr("key");
+			var ref = new Wilddog("https://bookcity2017.wilddogio.com/suggests/" + postID);
+			ref.once('value', function(snap) {
+				mui.alert(snap.val().content);
+			});
+		});
 		//	删除卖家书籍
 		$(document).on('tap', '.saleItem .mui-icon-trash', function() {
 			var postID = $(this).attr("key");
 			var ref = new Wilddog("https://bookcity2017.wilddogio.com/sale");
-			console.log(postID);
-			var btnArray = ['取消', '确认'];
 			mui.confirm('确认要删除这本书吗？', '', btnArray, function(e) {
 				//					回调方法内容
 				if(e.index == 1) {
@@ -364,10 +414,8 @@ define(['jquery', 'mui', 'data'], function() {
 		//	编辑卖家书籍
 		$(document).on('tap', '.saleItem .mui-icon-compose', function() {
 			var postID = $(this).attr("key");
-			console.log(postID);
 			var ref = new Wilddog("https://bookcity2017.wilddogio.com/sale/" + postID);
 			ref.on('value', function(snapshot) {
-				$("#bookID").val(snapshot.val().bookId);
 				$("#bookName").val(snapshot.val().bookName);
 				$("#author").val(snapshot.val().author);
 				$("#from").val(snapshot.val().from);
@@ -378,7 +426,6 @@ define(['jquery', 'mui', 'data'], function() {
 				$("#bookUpdate").fadeIn('fast');
 			});
 			$("#gitMsg").on('tap', function() {
-
 				var bookid = $("#bookID").val();
 				var bookname = $("#bookName").val();
 				var author = $("#author").val();
@@ -387,8 +434,7 @@ define(['jquery', 'mui', 'data'], function() {
 				var msg = $("#msg").val();
 				var imgUrl = $("#imgUrl").val();
 
-				if($.trim(bookid).length == 0 ||
-					$.trim(bookname).length == 0 ||
+				if($.trim(bookname).length == 0 ||
 					$.trim(author).length == 0 ||
 					$.trim(from).length == 0 ||
 					$.trim(classIs).length == 0 ||
@@ -399,7 +445,6 @@ define(['jquery', 'mui', 'data'], function() {
 				}
 
 				ref.update({
-					"bookId": bookid,
 					"bookName": bookname,
 					"author": author,
 					"from": from,
@@ -412,19 +457,7 @@ define(['jquery', 'mui', 'data'], function() {
 				});
 			});
 		});
-		//	删除建议
-		$(document).on('tap', '.sugItem .mui-icon-trash', function() {
-			var postID = $(this).attr("key");
-			console.log(postID);
-			var ref = new Wilddog("https://bookcity2017.wilddogio.com/suggests");
-			var btnArray = ['取消', '确认'];
-			mui.confirm('确认要删除该用户吗？', '', btnArray, function(e) {
-				//					回调方法内容
-				if(e.index == 1) {
-					ref.child(postID).remove();
-				}
-			})
-		});
+
 	})
 
 	$("#cancle").on('tap', function() {
@@ -449,7 +482,11 @@ define(['jquery', 'mui', 'data'], function() {
 		}
 	});
 	$(".backManager li:nth-of-type(3) a").on('tap', function() {
-		window.location.href = 'salerManager.html';
+		if(getStorageNow('manager') == 1) {
+			window.location.href = 'allSalerManager.html';
+		} else {
+			mui.alert('您没有权限进入');
+		}
 	});
 	$(".backManager li:nth-of-type(4) a").on('tap', function() {
 		if(getStorageNow('manager') == 1) {
@@ -458,7 +495,10 @@ define(['jquery', 'mui', 'data'], function() {
 			mui.alert('您没有权限进入');
 		}
 	});
+	$(".backManager:nth-of-type(2) li").on('tap', function() {
+		setStorage('Entrance','saler');
+		window.location.href = 'salerManager.html';
+	});
 
-
-window.gitBookMsg = gitBookMsg;
+	window.gitBookMsg = gitBookMsg;
 })

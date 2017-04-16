@@ -41,6 +41,9 @@
   top: 10px;
   font-size: 25px;
 }
+.bookMsg i.icon-dashang {
+  right: 60px;
+}
 .bookMsg button {
   position: absolute;
   top: 90px;

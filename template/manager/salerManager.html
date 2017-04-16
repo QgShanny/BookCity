@@ -17,6 +17,21 @@
 			<h1 class="mui-title">卖家书籍管理</h1>
 		</header>
 		
+		<div class="mui-input-group headerafter userMsg">
+			<div class="mui-input-row">
+				<label>店名：</label>
+				<a class="mui-navigate-right">
+					<span id="storeName" class="pull-right">加载中...</span>
+			    </a>
+			</div>
+			<div class="mui-input-row">
+				<label>店描述：</label>
+				<a class="mui-navigate-right">
+					<span id="storeExplain" class="pull-right">加载中...</span>
+			    </a>
+			</div>
+		</div>
+		
 		<table class="backManager" id="allSaleBookList" border="">
 			<tr>
 				<th>序号</th>
@@ -29,10 +44,6 @@
 		
 		<div id="bookUpdate">
 		<form class="mui-input-group headerafter">
-			<div class="mui-input-row">
-				<label for="bookID">ID</label>
-				<input type="text" name="bookID" id="bookID" class="mui-input-clear" value="" />
-			</div>
 
 			<div class="mui-input-row">
 				<label for="bookName">书名</label>
@@ -70,12 +81,12 @@
 			</div>
 		</form>
 		<div class="buttonWrap">
-			<button type="button" class="mui-btn mui-btn-primary" id="reset">重置</button>
+			<button type="button" class="mui-btn mui-btn-primary" id="cancle">取消</button>
 			<button type="button" class="mui-btn mui-btn-primary" id="gitMsg" onclick="gitBookMsg();">提交</button>
 		</div>
 			
 		</div>
-		<button type="button" id="addBook" class="mui-btn mui-btn-primary mui-btn-outlined">添加</button>
+		<button type="button" id="addBook" class="mui-btn mui-btn-primary mui-btn-outlined" booktype="saler">添加</button>
 
 		<script data-main = "../../js/manager" src="../../js/lib/require.js" type="text/javascript" charset="utf-8"></script>
 	</body>

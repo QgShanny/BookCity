@@ -27,7 +27,7 @@
 								<!--您未登录<span>13190038</span>--></p>
 							<ul>
 								<li>
-									<p>0</p>
+									<p id="readNum">0</p>
 									<p>阅读</p>
 								</li>
 								<li>
@@ -142,14 +142,20 @@
 									<p>书架空空的哦。。。</p>
 									<ul>
 										<li>
-											<a href=""><i class="iconfont icon-shucheng"></i>精品书城</a>
-										</li>
-										<li>
 											<a href=""><i class="iconfont icon-mianfei" style="font-size: 27px;"></i>免费专区</a>
 										</li>
-										<li>
+										<li id="mybookShelf">
 											<a href=""><i class="iconfont icon-books"></i>我的书架</a>
 										</li>
+									</ul>
+								</div>
+								<div id="bookShelf">
+									<ul>
+										<!--<li><img src="../img/boy.jpg"/></li>
+										<li><img src="../img/boy.jpg"/></li>
+										<li><img src="../img/boy.jpg"/></li>
+										<li><img src="../img/boy.jpg"/></li>
+										<span class="ulBottom"></span>-->
 									</ul>
 								</div>
 								1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br /> 1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br /> 1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br /> 1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />1 <br />
@@ -208,7 +214,7 @@
 												</li>
 												<li>
 													<a href="#"><i class="iconfont icon-huodong" style="color: #d58023;"></i>
-														<p>活动专题</p>
+														<p>免费专区</p>
 													</a>
 												</li>
 												<li id="sign">
@@ -1322,12 +1328,14 @@
 			<div id="header">
 				<a href="javascript:;" class="mui-icon mui-icon-arrowleft" id="back"></a>
 				<i style="background: url(../img/logo.png);" class="logo"></i>
-				<form class="mui-input-group">
+				<form class="mui-input-group search">
 					<div class="mui-input-row">
-						<input type="text" class="mui-input-clear" placeholder="请输入书名或作者名">
+						<input id="keyword" type="text" class="mui-input-clear" placeholder="请输入书名或作者名" oninput="searchBook()">
 						<i class="mui-icon mui-icon-search" id="searchBook"></i>
 					</div>
 				</form>
+				<ul id="searchResult">
+				</ul>
 			</div>
 		</div>
 

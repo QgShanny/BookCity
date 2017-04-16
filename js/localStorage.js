@@ -15,11 +15,11 @@ define(['jquery'], function() {
 
 		if(new Date().getTime() - data.time > exp) {
 			localStorage.removeItem(key);
-			console.log("out");
+			console.log("没有用户登录");
 			msg = 0;
 		} else {
 			msg = 1;
-			console.log("in");
+			console.log("已有用户登录");
 		}
 
 		return msg;

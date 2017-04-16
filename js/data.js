@@ -144,24 +144,7 @@ define(['jquery', 'localStorage'], function() {
 		console.log("用户信息显示完毕");
 	}
 
-	//	签到
-	$("#sign").on('tap', function() {
-		var signFlag = sign("userKey");
-		if(signFlag == 1) {
-			mui.alert("签到成功,增加10个积分", function() {
-				//更新积分
-				var key = getStorageNow("userKey");
-				var ref = new Wilddog("https://bookcity2017.wilddogio.com/users"); //找到对应的用户
-				var newRef = ref.child(key);
-				var scoreObj = parseInt(getStorageNow("score")) + 10;
-				newRef.update({
-					"score": scoreObj
-				});
-				$("#score").text(scoreObj);
-				setStorage("score", scoreObj);
-			});
-		}
-	});
+
 
 	//	登录界面
 	var loginFun = function() {

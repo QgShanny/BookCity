@@ -11,6 +11,30 @@ require.config({
 });
 define(['jquery', 'mui', 'data'], function() {
 	var btnArray = ['取消', '确认'];
+
+	//	用户的收藏的所以书籍
+	var refCollect = new Wilddog("https://bookcity2017.wilddogio.com/users/" + getStorageNow('userKey') + "/collectionbook");
+	refCollect.on('value', function(snap) {
+		var rst = snap.val();
+		for(i in rst) {
+			if(rst[i].bookKey.indexOf(getStorageNow("bookKey")) != -1) {
+				$("#collection").addClass('icon-aixin');
+				$("#collection").removeClass('icon-heart');
+			}
+		}
+	});
+	//	用户购买过的书籍
+	var buyflag = 0;
+	var refBuy = new Wilddog("https://bookcity2017.wilddogio.com/users/" + getStorageNow('userKey') + "/buyBooks");
+	refBuy.on('value', function(snap) {
+		var rst = snap.val();
+		for(i in rst) {
+			if(rst[i].buy.indexOf(getStorageNow("bookKey")) != -1) {
+				buyflag = 1;
+			}
+		}
+	});
+
 	getBookMsg(getStorageNow("bookKey"));
 	for(var i = 0; i < 2; i++) {
 		(function() {
@@ -47,13 +71,16 @@ define(['jquery', 'mui', 'data'], function() {
 		if(signflag != 1) {
 			return;
 		}
+		if($("#collection").hasClass('icon-aixin')) {
+			return;
+		}
 		var collectNum = getStorageNow('bookKey');
 		var userKey = getStorageNow('userKey');
 		ref = new Wilddog("https://bookcity2017.wilddogio.com/users/" + userKey + "/collectionbook");
 		var newref = ref.push({
 			bookKey: collectNum
 		});
-		updateScore(5,1);
+		updateScore(5, 1);
 		mui.alert("收藏成功,增加5个积分");
 	});
 	//	打赏书籍
@@ -111,6 +138,10 @@ define(['jquery', 'mui', 'data'], function() {
 		if(getStorageNow("bookType") == "sale") {
 			mui.alert("已复制好购买链接，可到浏览器粘贴打开");
 		} else {
+			if(buyflag == 1) {
+				window.location.href = 'reader/reader.html'
+				return;
+			}
 			var ref = new Wilddog("https://bookcity2017.wilddogio.com/books/" + getStorageNow("bookKey"));
 			ref.on('value', function(snap) {
 				var score = snap.val().bookScore;

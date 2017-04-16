@@ -34,7 +34,7 @@ define(['jquery', 'mui', 'data','localStorage'], function() {
 				continue;
 			}
 			bookList += '<a class="book" num='+i+'><img src="'+jsonStr[i].imgUrl+'"/><p class="bookName">'+jsonStr[i].bookName+'</p><p class="price">'+jsonStr[i].price+'</p>'
-			  + '<p class="upTime">上线时间：<span></span></p><button type="button" class="mui-btn mui-btn-primary mui-btn-outlined readMore" bookKey="'+jsonStr[i].key+'">了解详情</button></a>'
+			  + '<p class="upTime">上线时间：'+jsonStr[i].updateTime+'<span></span></p><button type="button" class="mui-btn mui-btn-primary mui-btn-outlined readMore" bookKey="'+jsonStr[i].key+'">了解详情</button></a>'
 			  + '<div class="clearfix"></div>';
 		}
 		$(".allBooks").html(bookList);

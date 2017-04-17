@@ -15,7 +15,7 @@ define(['jquery', 'mui', 'data'], function() {
 
 	function gitBookMsg() {
 		var type = getStorageNow("bookSale"); //type为0表示是从商家处添加书籍
-		if(type == 1) {
+		if(type == 0) {
 			var ref = new Wilddog("https://bookcity2017.wilddogio.com/sale");
 		} else {
 			var ref = new Wilddog("https://bookcity2017.wilddogio.com/books");
@@ -33,13 +33,13 @@ define(['jquery', 'mui', 'data'], function() {
 			$.trim(from).length == 0 ||
 			$.trim(classIs).length == 0 ||
 			$.trim(msg).length == 0 ||
-			$.trim(imgUrl).length == 0 ||
-			$.trim(buyUrl).length == 0) {
+			$.trim(imgUrl).length == 0) {
 			mui.alert("您还有未输入的信息");
 			return;
 		}
-		if(type == 1) {
-			if($.trim($("#price").val()) == 0) {
+		if(type == 0) {
+			if($.trim($("#price").val()) == 0 ||
+			$.trim(buyUrl).length == 0) {
 				mui.alert("您还有未输入的信息");
 				return;
 			}
@@ -54,7 +54,7 @@ define(['jquery', 'mui', 'data'], function() {
 		});
 
 		var postID = newref.key();
-		if(type == 1) {
+		if(type == 0) {
 			var now = new Date();
 			var year = now.getFullYear(); //年  
 			var month = now.getMonth() + 1; //月  
@@ -68,6 +68,7 @@ define(['jquery', 'mui', 'data'], function() {
 				"updateTime": time
 			});
 		}
+		mui.alert('书籍插入成功');
 	}
 
 	// 书籍查询
@@ -76,14 +77,10 @@ define(['jquery', 'mui', 'data'], function() {
 	refBook.on("value", function(snapshot) {
 		$(".bookItem").remove();
 		var jsonStr = snapshot.val();
-		var booksArr = [];
 		var bookList = "";
-		for(i in jsonStr) {
-			booksArr.push(jsonStr[i]);
-		}
 		var temp = 1;
-		for(i in booksArr) {
-			bookList += "<tr class='bookItem'><td>" + temp + "</td><td>" + booksArr[i].bookName + "</td><td>" + booksArr[i].author + "</td><td><i class='mui-icon mui-icon-trash' key='" + booksArr[i].key + "'></i><i class='mui-icon mui-icon-compose' key='" + booksArr[i].key + "'></i></td></tr>";
+		for(i in jsonStr) {
+			bookList += "<tr class='bookItem'><td>" + temp + "</td><td>" + jsonStr[i].bookName + "</td><td>" + jsonStr[i].author + "</td><td><i class='mui-icon mui-icon-trash' key='" + i + "'></i><i class='mui-icon mui-icon-compose' key='" + i + "'></i></td></tr>";
 			temp++;
 		}
 		$(bookList).appendTo($("#allBookList"));

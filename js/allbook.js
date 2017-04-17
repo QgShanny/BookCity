@@ -10,11 +10,15 @@ require.config({
 
 });
 define(['jquery', 'localStorage','lazyload'], function() {
-	
+	var booksType = getStorageNow('booksType');
+	$("#bookType").text(booksType);
 	var ref = new Wilddog("https://bookcity2017.wilddogio.com/books");
 	ref.on('value',function(sanp){
 		var jsonStr = sanp.val();
 		for(i in jsonStr){
+			if(booksType != jsonStr[i].Class){
+				continue;
+			}
 			var temp = '<li>'+
 							'<img class="lazy" src="'+jsonStr[i].imgUrl+'"/>'+
 							'<div>'+

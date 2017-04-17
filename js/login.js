@@ -29,7 +29,7 @@ define(['jquery', 'mui', 'localStorage'], function() {
 //	});
 	
 	ref.on("value", function(snapshot) {
-		var jsonStr = snapshot.val();
+		jsonStr = snapshot.val();
 		console.log("用户信息爬取完成");
 		$("#login").on('tap', function() {
 			var phone = $.trim($("#phone").val());
@@ -121,19 +121,21 @@ define(['jquery', 'mui', 'localStorage'], function() {
 		}
 
 		var isSign = 0;
-		for(i in usersArr) {
-			if(username == usersArr[i].userName) {
+		console.log(jsonStr);
+		for(i in jsonStr) {
+			console.log(jsonStr[i].username)
+			if(username == jsonStr[i].userName) {
 				mui.alert("该用户名已经有人使用！");
 				isSign = 1;
 				break;
 			}
-			if(phone == usersArr[i].phone) {
+			if(phone == jsonStr[i].phone) {
 				mui.alert("该手机已经注册过！");
 				isSign = 1;
 				break;
 			}
 
-			if(email == usersArr[i].email) {
+			if(email == jsonStr[i].email) {
 				mui.alert("该邮箱已经注册过！");
 				isSign = 1;
 				break;

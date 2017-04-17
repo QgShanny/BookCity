@@ -298,6 +298,7 @@ define([
 			ref.update({
 				userHead: imgData
 			});
+			setStorage('userHead',imgData);
 			console.log("图片长度为：" + imgData.length);
 		}
 		$("#userPic").val();

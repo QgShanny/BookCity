@@ -3,8 +3,11 @@ define(['jquery', 'data'], function() {
 	var signflag = 0;
 	var ref = new Wilddog("https://bookcity2017.wilddogio.com/users/" + getStorageNow("userKey"));
 	ref.once('value', function(snap) {
-			var rst = snap.val().signTime;
-			signflag = isToday(rst);
+			var rst = snap.val();
+			if(rst!=null){
+				rst = rst.signTime;
+				signflag = isToday(rst);
+			}
 	})
 		//	意见反馈
 	$("#submitSuggest").on('tap', function() {

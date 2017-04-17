@@ -153,6 +153,17 @@ define(['jquery', 'localStorage'], function() {
 	
 // 女生频道
 	$("#girlAll").on('tap',function(){
+		setStorage("booksType","女生");
+		window.location.href = 'allBook.html';
+	});
+// 男生频道
+	$("#boyAll").on('tap',function(){
+		setStorage("booksType","男生");
+		window.location.href = 'allBook.html';
+	});
+// 免费频道
+	$("#free").on('tap',function(){
+		setStorage("booksType","免费");
 		window.location.href = 'allBook.html';
 	});
 	

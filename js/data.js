@@ -42,6 +42,7 @@ define(['jquery', 'localStorage'], function() {
 		jsonStr = snapshot.val();
 		for(i in jsonStr) {
 			$('<li style="display:none;" key=' + i + '>' + jsonStr[i].bookName + ' ' + jsonStr[i].author + '</li>').appendTo($("#searchResult"));
+			$('<li class="mui-table-view-cell" key=' + i + '><span class="baijia">' + jsonStr[i].bookName + '</li>').appendTo($(".baijiaz"));
 			if(jsonStr[i].Class == "男生") {
 				$("<li key=" + i + " class='mui-table-view-cell'><a class='mui-navigate-right'>" + jsonStr[i].bookName + "</a></li>").appendTo($("#boyTui ul:nth-of-type(2)"));
 				boyLen++;
@@ -49,6 +50,9 @@ define(['jquery', 'localStorage'], function() {
 			if(jsonStr[i].Class == "女生") {
 				$("<li key=" + i + " class='mui-table-view-cell'><a class='mui-navigate-right'>" + jsonStr[i].bookName + "</a></li>").appendTo($("#girlTui ul:nth-of-type(2)"));
 				girlLen++;
+			}
+			if(jsonStr[i].getScore!=null){
+				$('<li class="mui-table-view-cell">'+jsonStr[i].bookName+'<span class="mui-badge mui-badge-primary">￥</span><spann class="pull-right">'+jsonStr[i].getScore+'</spann></li>').appendTo($(".dashang"));
 			}
 			console.log("书籍插入完毕。")
 		}
